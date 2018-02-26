@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Game_Project</string>
+    <string name="gameTitle1">Float</string>
+    <string name="gameTitle2">Bubble</string>
+    <string name="gameTitle3">Float!</string>
+    <string name="start">Start</string>
+    <string name="settings">Settings</string>
+    <string name="leaderboards">Leaderboards</string>
+    <string name="mute">Mute</string>
+    <string name="music">Music</string>
+    <string name="soundFX">Sound FX</string>
+    <string name="scoreText">You Reached:</string>
+    <string name="score">0M</string>
+    <string name="playAgain">Play Again</string>
+</resources>
