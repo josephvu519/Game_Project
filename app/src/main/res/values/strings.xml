@@ -12,4 +12,5 @@
     <string name="scoreText">You Reached:</string>
     <string name="score">0M</string>
     <string name="playAgain">Play Again</string>
+    <string name="quit">Quit</string>
 </resources>
