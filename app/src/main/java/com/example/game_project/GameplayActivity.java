@@ -1,7 +1,11 @@
 package com.example.game_project;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 public class GameplayActivity extends AppCompatActivity {
@@ -11,6 +15,17 @@ public class GameplayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gameplay);
 
-        Toast.makeText(this, "Hello Clarice", Toast.LENGTH_LONG).show();
+        Toast instruction = Toast.makeText(this, "Hello Clarice", Toast.LENGTH_LONG);
+        instruction.setGravity(Gravity.CENTER, 0, 0);
+        instruction.show();
+
+        Button pauseButton = findViewById(R.id.pauseButton);
+        pauseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), PausedActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

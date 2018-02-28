@@ -13,4 +13,10 @@
     <string name="score">0M</string>
     <string name="playAgain">Play Again</string>
     <string name="quit">Quit</string>
+
+    <string name="title_activity_pause_menu">PauseMenu</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="resume">Resume</string>
+    <string name="pause">||</string>
 </resources>
