@@ -7,14 +7,12 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
-/**
- * Created by Draggynov on 2/27/2018.
- */
-
 public class QuitDialog extends DialogFragment{
+    //Interface is defined here
     public interface QuitDialogListener{
         public void onPositiveClick();
     }
+    //Object that implements the Interface
     QuitDialogListener mListener;
 
     @Override

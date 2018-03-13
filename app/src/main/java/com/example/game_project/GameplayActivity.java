@@ -15,8 +15,8 @@ public class GameplayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gameplay);
 
-        Toast instruction = Toast.makeText(this, "Hello Clarice", Toast.LENGTH_LONG);
-        instruction.setGravity(Gravity.CENTER, 0, 0);
+        Toast instruction = Toast.makeText(this, "Tilt the screen to move", Toast.LENGTH_LONG);
+        instruction.setGravity(Gravity.TOP, 0, 0);
         instruction.show();
 
         Button pauseButton = findViewById(R.id.pauseButton);

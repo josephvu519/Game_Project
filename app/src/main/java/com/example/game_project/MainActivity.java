@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity implements QuitDialog.QuitDi
 
 
         Button quitButton = findViewById(R.id.quitButton);
+        //Callback code is invoked here
         quitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements QuitDialog.QuitDi
         quitFragment.show(getFragmentManager(), "quitDialog");
     }
 
+    //Callback code is defined here
     public void onPositiveClick(){
         System.exit(0);
     }
