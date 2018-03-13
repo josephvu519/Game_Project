@@ -1,24 +1,23 @@
 package com.example.game_project;
 
-import android.app.DialogFragment;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class PausedActivity extends AppCompatActivity implements QuitDialog.QuitDialogListener{
+public class GameOverActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.paused);
+        setContentView(R.layout.gameover);
 
-        Button pauseButton = findViewById(R.id.quitButton);
-        pauseButton.setOnClickListener(new View.OnClickListener() {
+        Button playAgainButton = findViewById(R.id.playAgainButton);
+        playAgainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                confirmQuit(v);
+                finish();
             }
         });
 
@@ -31,14 +30,5 @@ public class PausedActivity extends AppCompatActivity implements QuitDialog.Quit
                 startActivity(intent);
             }
         });
-    }
-
-    public void confirmQuit(View view){
-        DialogFragment quitFragment = new QuitDialog();
-        quitFragment.show(getFragmentManager(), "quitDialog");
-    }
-
-    public void onPositiveClick(){
-        finishAffinity();
     }
 }

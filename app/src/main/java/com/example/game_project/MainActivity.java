@@ -16,7 +16,24 @@ public class MainActivity extends AppCompatActivity implements QuitDialog.QuitDi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Button startButton = findViewById(R.id.startButton);
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), GameplayActivity.class);
+                finish();
+                startActivity(intent);
+            }
+        });
 
+        Button settingsButton = findViewById(R.id.settingsButton);
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+                startActivity(intent);
+            }
+        });
 
         Button quitButton = findViewById(R.id.quitButton);
         //Callback code is invoked here
@@ -27,15 +44,7 @@ public class MainActivity extends AppCompatActivity implements QuitDialog.QuitDi
             }
         });
 
-        Button startButton = findViewById(R.id.startButton);
-        startButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), GameplayActivity.class);
-                finish();
-                startActivity(intent);
-            }
-        });
+
 
     }
     public void confirmQuit(View view){

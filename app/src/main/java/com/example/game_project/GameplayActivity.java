@@ -27,5 +27,14 @@ public class GameplayActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button kysButton = findViewById(R.id.kysButton);
+        kysButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), GameOverActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
