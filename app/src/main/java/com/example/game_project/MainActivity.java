@@ -1,8 +1,6 @@
 package com.example.game_project;
 
-import android.app.AlertDialog;
 import android.app.DialogFragment;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +20,15 @@ public class MainActivity extends AppCompatActivity implements QuitDialog.QuitDi
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), GameplayActivity.class);
                 finish();
+                startActivity(intent);
+            }
+        });
+
+        Button leaderboardsButton = findViewById(R.id.leaderboardsButton);
+        leaderboardsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), LeaderboardsActivity.class);
                 startActivity(intent);
             }
         });

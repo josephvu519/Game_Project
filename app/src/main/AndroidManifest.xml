@@ -19,7 +19,8 @@
         <activity android:name=".GameplayActivity" />
         <activity android:name=".PausedActivity" />
         <activity android:name=".SettingsActivity" />
-        <activity android:name=".GameOverActivity"></activity>
+        <activity android:name=".GameOverActivity" />
+        <activity android:name=".LeaderboardsActivity"></activity>
     </application>
 
 </manifest>

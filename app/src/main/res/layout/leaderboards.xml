@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.game_project.LeaderboardsActivity">
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="30dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/backArrow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/leaderboardText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="50dp"
+        android:fontFamily="casual"
+        android:text="@string/leaderboards"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        android:textColor="?attr/colorError"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TableLayout
+        android:layout_width="368dp"
+        android:layout_height="367dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.97">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/rankText"
+                android:layout_width="266dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/rank"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textSize="30dp"
+                tools:layout_editor_absoluteX="72dp"
+                tools:layout_editor_absoluteY="164dp" />
+
+            <TextView
+                android:id="@+id/nameText"
+                android:layout_width="195dp"
+                android:layout_height="wrap_content"
+                android:text="@string/name"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textSize="30dp" />
+
+            <TextView
+                android:id="@+id/timeText"
+                android:layout_width="102dp"
+                android:layout_height="wrap_content"
+                android:text="@string/time"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textSize="30dp" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/rank1Text"
+                android:layout_width="266dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/rank1"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textSize="24dp"
+                tools:layout_editor_absoluteX="72dp"
+                tools:layout_editor_absoluteY="164dp" />
+
+            <TextView
+                android:id="@+id/name1Text"
+                android:layout_width="195dp"
+                android:layout_height="match_parent"
+                android:text="@string/emptyName"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textSize="24dp" />
+
+            <TextView
+                android:id="@+id/time1Text"
+                android:layout_width="102dp"
+                android:layout_height="wrap_content"
+                android:text="@string/emptyTime"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textSize="24dp" />
+
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/rank2Text"
+                android:layout_width="266dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/rank2"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textSize="24dp"
+                tools:layout_editor_absoluteX="72dp"
+                tools:layout_editor_absoluteY="164dp" />
+
+            <TextView
+                android:id="@+id/name2Text"
+                android:layout_width="195dp"
+                android:layout_height="wrap_content"
+                android:text="@string/emptyName"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textSize="24dp" />
+
+            <TextView
+                android:id="@+id/time2Text"
+                android:layout_width="102dp"
+                android:layout_height="wrap_content"
+                android:text="@string/emptyTime"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textSize="24dp" />
+
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/rank3Text"
+                android:layout_width="266dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/rank3"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textSize="24dp"
+                tools:layout_editor_absoluteX="72dp"
+                tools:layout_editor_absoluteY="164dp" />
+
+            <TextView
+                android:id="@+id/name3Text"
+                android:layout_width="195dp"
+                android:layout_height="wrap_content"
+                android:text="@string/emptyName"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textSize="24dp" />
+
+            <TextView
+                android:id="@+id/time3Text"
+                android:layout_width="102dp"
+                android:layout_height="wrap_content"
+                android:text="@string/emptyTime"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textSize="24dp" />
+
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/rank4Text"
+                android:layout_width="266dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/rank4"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textSize="24dp"
+                tools:layout_editor_absoluteX="72dp"
+                tools:layout_editor_absoluteY="164dp" />
+
+            <TextView
+                android:id="@+id/name4Text"
+                android:layout_width="195dp"
+                android:layout_height="wrap_content"
+                android:text="@string/emptyName"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textSize="24dp" />
+
+            <TextView
+                android:id="@+id/time4Text"
+                android:layout_width="102dp"
+                android:layout_height="wrap_content"
+                android:text="@string/emptyTime"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textSize="24dp" />
+
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/rank5Text"
+                android:layout_width="266dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/rank5"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textSize="24dp"
+                tools:layout_editor_absoluteX="72dp"
+                tools:layout_editor_absoluteY="164dp" />
+
+            <TextView
+                android:id="@+id/name5Text"
+                android:layout_width="195dp"
+                android:layout_height="wrap_content"
+                android:text="@string/emptyName"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textSize="24dp" />
+
+            <TextView
+                android:id="@+id/time5Text"
+                android:layout_width="102dp"
+                android:layout_height="wrap_content"
+                android:text="@string/emptyTime"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textSize="24dp" />
+
+        </TableRow>
+
+    </TableLayout>
+
+</android.support.constraint.ConstraintLayout>
