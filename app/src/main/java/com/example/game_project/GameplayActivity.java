@@ -32,8 +32,8 @@ public class GameplayActivity extends AppCompatActivity {
             }
         });
 
-        Button kysButton = findViewById(R.id.kysButton);
-        kysButton.setOnClickListener(new View.OnClickListener() {
+      //  Button kysButton = findViewById(R.id.kysButton);
+      /*  kysButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), GameOverActivity.class);
@@ -41,7 +41,7 @@ public class GameplayActivity extends AppCompatActivity {
 
                 timer.getElapsedTimeString();
             }
-        });
+        });*/
 
 
 
