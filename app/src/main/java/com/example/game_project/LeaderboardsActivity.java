@@ -1,10 +1,13 @@
 package com.example.game_project;
 
+import android.content.ContentValues;
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.TextView;
 
 public class LeaderboardsActivity extends AppCompatActivity {
     SQLiteDatabase theDB;
@@ -30,6 +33,23 @@ public class LeaderboardsActivity extends AppCompatActivity {
             @Override
             public void onDBReady(SQLiteDatabase db) {
                 theDB = db;
+                ContentValues values = new ContentValues();
+                values.put("rank", "1");
+                values.put("name", "bruh");
+                values.put("time", "15:30");
+
+                long newRowID = theDB.insert("leaderboard", null, values);
+                TextView name1text = findViewById(R.id.name1Text);
+                TextView time1text = findViewById(R.id.time1Text);
+                String[] columns = {"rank","name","time"};
+                Cursor c = theDB.query("leaderboard", columns,"rank = 1", null,null,null,null);
+              if (c.moveToFirst()) {
+                  name1text.setText(c.getString(c.getColumnIndex("name")));
+                  time1text.setText(c.getString(c.getColumnIndex("time")));
+              }
+              c.close();
+              db.execSQL("DELETE FROM leaderboard WHERE rank = '1'");
+              db.close();
             }
         });
 

@@ -30,7 +30,6 @@ import android.os.AsyncTask;
         private static LeaderboardDB theDb;
         private Context appContext;
 
-        // Q:  How do we implement the singleton pattern?
         private LeaderboardDB(Context context) {
             super(context.getApplicationContext(),DATABASE_NAME,null,DATABASE_VERSION);
         }
@@ -58,10 +57,6 @@ import android.os.AsyncTask;
             onUpgrade(db, oldVersion, newVersion);
         }
 
-
-        // Q: How should we call theDb.getWritableDatabase() ?  On the UI thread?
-        // Use an AsyncTask
-        // Q: How do we tell the caller that it is ready? Via a callback
         public void getWritableDatabase(OnDBReadyListener listener) {
             new OpenDbAsyncTask().execute(listener);
         }
@@ -77,7 +72,6 @@ import android.os.AsyncTask;
 
             @Override
             protected void onPostExecute(SQLiteDatabase db) {
-                //Make that callback
                 listener.onDBReady(db);
             }
         }
