@@ -18,9 +18,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.game_project.Accessories.Timer;
-
+import com.q42.android.scrollingimageview.ScrollingImageView;
 
 public class GameplayActivity extends AppCompatActivity {
+
+
+   // GameViewActivity view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,15 +31,19 @@ public class GameplayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gameplay);
         final Timer timer = new Timer();
+       // view = new GameViewActivity(this);
+      //  setContentView(view);
+        ScrollingImageView background = findViewById(R.id.scrolling_background);
 
         //TEST
         final ImageView bubble = findViewById(R.id.bubble);
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         final int screenHeight = displayMetrics.heightPixels;
+        background.setMinimumHeight(screenHeight);
         final int screenWidth = displayMetrics.widthPixels;
         final int maxTilt = 10;
-        final TextView axisX = findViewById(R.id.xAxis);
+     //   final TextView axisX = findViewById(R.id.xAxis);
         //-------
 
 
@@ -84,7 +91,7 @@ public class GameplayActivity extends AppCompatActivity {
                 else {
                     lp.setMargins((int)((screenWidth/2 - bubble.getWidth()/2) + axisY * (screenWidth-bubble.getWidth())/2/maxTilt), (int)(screenHeight*.8), 0, 80);
                     bubble.setLayoutParams(lp);
-                    axisX.setText("Z Axis: " + sensorEvent.values[2] * 180 /Math.PI);
+                    //axisX.setText("Z Axis: " + sensorEvent.values[2] * 180 /Math.PI);
                 }
             }
 

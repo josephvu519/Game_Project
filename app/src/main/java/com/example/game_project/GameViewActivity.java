@@ -13,8 +13,7 @@
 
 package com.example.game_project;
 
-        import java.util.ArrayList;
-        import java.util.List;
+
         import java.util.Timer;
         import java.util.TimerTask;
         import android.content.Context;
@@ -22,7 +21,6 @@ package com.example.game_project;
         import android.graphics.Color;
         import android.graphics.Paint;
         import android.os.Build;
-        import android.os.Message;
         import android.view.MotionEvent;
         import android.view.SurfaceHolder;
         import android.view.SurfaceView;
@@ -123,15 +121,15 @@ public class GameViewActivity extends SurfaceView {
     /**
      * content of the timertask
      */
-  /*  public void run() {
-        checkPasses();
-        checkOutOfRange();
-        checkCollision();
-        createObstacle();
-        move();
+    public void run() {
+      //  checkPasses();
+       // checkOutOfRange();
+       // checkCollision();
+       // createObstacle();
+      //  move();
 
         draw();
-    }*/
+    }
 
 
 
@@ -171,18 +169,18 @@ public class GameViewActivity extends SurfaceView {
         paused = true;
     }
 
-  /*  public void drawOnce(){
+    public void drawOnce(){
         (new Thread(new Runnable() {
             @Override
             public void run() {
-                if(tutorialIsShown){
-                    showTutorial();
-                } else {
+               // if(tutorialIsShown){
+                //    showTutorial();
+               // } else {
                     draw();
                 }
-            }
+            //}
         })).start();
-    }*/
+    }
 
     public void resume(){
         paused = false;

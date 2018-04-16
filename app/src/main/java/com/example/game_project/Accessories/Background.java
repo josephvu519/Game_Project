@@ -26,12 +26,6 @@ public class Background extends Character{
         this.bitmap = globalBitmap;
     }
 
-    /**
-     * Draws the bitmap to the Canvas.
-     * The height of the bitmap will be scaled to the height of the canvas.
-     * When the bitmap is scrolled to far to the left, so it won't cover the whole screen,
-     * the bitmap will be drawn another time behind the first one.
-     */
     @Override
     public void draw(Canvas canvas) {
         double factor = (1.0 * canvas.getHeight()) / bitmap.getHeight();
