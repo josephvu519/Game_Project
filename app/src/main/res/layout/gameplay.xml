@@ -21,6 +21,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
+    <com.cunoraz.continuouscrollable.ContinuousScrollableImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:direction="up"
+        app:duration="2500"
+        app:imageSrc="@drawable/background"
+        app:scaleType="centerInside" />
+
     <RelativeLayout
         android:id="@+id/bubbleLayout"
         android:layout_width="match_parent"
@@ -37,15 +47,5 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/bubble" />
-
-        <com.cunoraz.continuouscrollable.ContinuousScrollableImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            app:direction="right"
-            app:scaleType="centerInside"
-            app:duration="2500"
-            app:imageSrc="@drawable/background2"/>
-
-</RelativeLayout>
+    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
