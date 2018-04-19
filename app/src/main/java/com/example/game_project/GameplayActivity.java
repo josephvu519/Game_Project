@@ -33,14 +33,14 @@ public class GameplayActivity extends AppCompatActivity {
         final Timer timer = new Timer();
        // view = new GameViewActivity(this);
       //  setContentView(view);
-        ScrollingImageView background = findViewById(R.id.scrolling_background);
+       // ScrollingImageView background = findViewById(R.id.scrolling_background);
 
         //TEST
         final ImageView bubble = findViewById(R.id.bubble);
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         final int screenHeight = displayMetrics.heightPixels;
-        background.setMinimumHeight(screenHeight);
+      //  background.setMinimumHeight(screenHeight);
         final int screenWidth = displayMetrics.widthPixels;
         final int maxTilt = 10;
      //   final TextView axisX = findViewById(R.id.xAxis);

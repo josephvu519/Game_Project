@@ -38,13 +38,14 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/bubble" />
 
-        <com.q42.android.scrollingimageview.ScrollingImageView
-            android:id="@+id/scrolling_background"
+        <com.cunoraz.continuouscrollable.ContinuousScrollableImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:rotation="270"
-            scrolling_image_view:speed="1dp"
-            scrolling_image_view:src="@drawable/background2" />
+            android:layout_weight="1"
+            app:direction="right"
+            app:scaleType="centerInside"
+            app:duration="2500"
+            app:imageSrc="@drawable/background2"/>
 
 </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
