@@ -31,6 +31,7 @@ public class GameplayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gameplay);
         final Timer timer = new Timer();
+
        // view = new GameViewActivity(this);
       //  setContentView(view);
        // ScrollingImageView background = findViewById(R.id.scrolling_background);
