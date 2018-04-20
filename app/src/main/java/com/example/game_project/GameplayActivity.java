@@ -23,7 +23,7 @@ import com.q42.android.scrollingimageview.ScrollingImageView;
 public class GameplayActivity extends AppCompatActivity {
 
 
-   // GameViewActivity view;
+    GameViewActivity view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

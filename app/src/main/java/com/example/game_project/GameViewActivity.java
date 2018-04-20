@@ -14,6 +14,8 @@
 package com.example.game_project;
 
 
+        import java.util.ArrayList;
+        import java.util.List;
         import java.util.Timer;
         import java.util.TimerTask;
         import android.content.Context;
@@ -27,6 +29,7 @@ package com.example.game_project;
 
         import com.example.game_project.Accessories.Background;
         import com.example.game_project.Accessories.Bubble;
+        import com.example.game_project.Accessories.Obstacles;
 
 public class GameViewActivity extends SurfaceView {
 
@@ -43,7 +46,7 @@ public class GameViewActivity extends SurfaceView {
     private Character player;
     private Background background;
   //  private Frontground frontground;
-  //  private List<Obstacle> obstacles = new ArrayList<Obstacle>();
+    private List<Obstacles> obstacles = new ArrayList<Obstacles>();
   //  private List<PowerUp> powerUps = new ArrayList<PowerUp>();
 
     private PausedActivity pauseButton;
@@ -124,9 +127,9 @@ public class GameViewActivity extends SurfaceView {
     public void run() {
       //  checkPasses();
        // checkOutOfRange();
-       // checkCollision();
-       // createObstacle();
-      //  move();
+      //  checkCollision();
+        createObstacle();
+        move();
 
         draw();
     }
@@ -210,10 +213,10 @@ public class GameViewActivity extends SurfaceView {
      */
     private void drawCanvas(Canvas canvas, boolean drawPlayer){
         background.draw(canvas);
-     /*   for(Obstacle r : obstacles){
+        for(Obstacles r : obstacles){
             r.draw(canvas);
         }
-        for(PowerUp p : powerUps){
+   /*   for(PowerUp p : powerUps){
             p.draw(canvas);
         }
         if(drawPlayer){
@@ -247,7 +250,7 @@ public class GameViewActivity extends SurfaceView {
     /**
      * Checks whether an obstacle is passed.
      */
- /*   private void checkPasses(){
+    /*private void checkPasses(){
         for(Obstacle o : obstacles){
             if(o.isPassed()){
                 if(!o.isAlreadyPassed){    // probably not needed
@@ -284,27 +287,49 @@ public class GameViewActivity extends SurfaceView {
     /**
      * if no obstacle is present a new one is created
      */
- /*   private void createObstacle(){
+    private void createObstacle(){
         if(obstacles.size() < 1){
-            obstacles.add(new Obstacle(this, game));
+            obstacles.add(new Obstacles(this, game));
         }
-    }*/
+    }
 
+    /**
+     * Update sprite movements
+     */
+    private void move(){
+        for(Obstacles o : obstacles){
+            o.setSpeedX(-getSpeedX());
+            o.move();
+        }
+   //     for(PowerUp p : powerUps){
+   //         p.move();
+   //     }
+
+        background.setSpeedX(-getSpeedX()/2);
+        background.move();
+
+     //   frontground.setSpeedX(-getSpeedX()*4/3);
+     //   frontground.move();
+
+    //    pauseButton.move();
+
+//        player.move();
+    }
     /**
      * return the speed of the obstacles/cow
      */
- /*   public int getSpeedX(){
+    public int getSpeedX(){
         // 16 @ 720x1280 px
         int speedDefault = this.getWidth() / 45;
 
         // 1,2 every 4 points @ 720x1280 px
-        int speedIncrease = (int) (this.getWidth() / 600f * (game.accomplishmentBox.points / 4));
+     //   int speedIncrease = (int) (this.getWidth() / 600f * (game.accomplishmentBox.points / 4));
 
-        int speed = speedDefault + speedIncrease;
+        int speed = speedDefault /*+ speedIncrease*/;
 
         return Math.min(speed, 2*speedDefault);
     }
-*/
+
     /**
      * Let's the player fall down dead, makes sure the runcycle stops
      * and invokes the next method for the dialog and stuff.
