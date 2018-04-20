@@ -39,28 +39,28 @@
         android:id="@+id/mainMenuButton"
         android:layout_width="125dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="24dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="56dp"
         android:fontFamily="casual"
         android:text="@string/mainMenu"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="15dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/playAgainButton"
-        app:layout_constraintEnd_toStartOf="@+id/button7"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
-        android:id="@+id/button7"
-        android:layout_width="125dp"
+        android:id="@+id/leaderboardsButton"
+        android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_marginBottom="24dp"
-        android:layout_marginEnd="60dp"
-        android:text="Button"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/leaderboards"
         app:layout_constraintBottom_toTopOf="@+id/playAgainButton"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/mainMenuButton"
+        app:layout_constraintHorizontal_bias="0.951"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/playAgainButton"
