@@ -39,12 +39,10 @@ public class LeaderboardsActivity extends AppCompatActivity {
                 values.put("time", "15:30");
 
                 long newRowID = theDB.insert("leaderboard", null, values);
-                TextView name1text = findViewById(R.id.name1Text);
                 TextView time1text = findViewById(R.id.time1Text);
                 String[] columns = {"rank","name","time"};
                 Cursor c = theDB.query("leaderboard", columns,"rank = 1", null,null,null,null);
               if (c.moveToFirst()) {
-                  name1text.setText(c.getString(c.getColumnIndex("name")));
                   time1text.setText(c.getString(c.getColumnIndex("time")));
               }
               c.close();

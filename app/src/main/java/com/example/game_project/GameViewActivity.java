@@ -1,52 +1,311 @@
 /**
  * Created by adina on 4/8/2018.
- */
+ *//*
 
 
+
+*/
 /**
  * GameView
  * Probably the most important class for the game
  *
  * @author Lars Harmsen
  * Copyright (c) <2014> <Lars Harmsen - Quchen>
- */
+ *//*
+
 
 package com.example.game_project;
 
 
-        import java.util.ArrayList;
-        import java.util.List;
-        import java.util.Timer;
-        import java.util.TimerTask;
         import android.content.Context;
         import android.graphics.Canvas;
         import android.graphics.Color;
         import android.graphics.Paint;
-        import android.os.Build;
+        import android.graphics.Point;
+        import android.graphics.Rect;
+        import android.support.annotation.MainThread;
+        import android.util.AttributeSet;
         import android.view.MotionEvent;
         import android.view.SurfaceHolder;
         import android.view.SurfaceView;
 
-        import com.example.game_project.Accessories.Background;
-        import com.example.game_project.Accessories.Bubble;
-        import com.example.game_project.Accessories.Obstacles;
+        import com.example.game_project.Accessories.Obstacle;
 
-public class GameViewActivity extends SurfaceView {
+public class GameViewActivity extends SurfaceView implements SurfaceHolder.Callback {
 
-    /** Milliseconds for game timer tick */
+    private static final int PLAYER_SIZE = 100;
+    private MainThread thread;
+
+//    private RectPlayer player;
+    private Point playerPoint;
+    private Obstacle om;
+
+    private GameplayActivity gameActivity;
+
+    private boolean RUNNING;
+    private boolean showGameOver;
+
+
+    public GameViewActivity(Context context) {
+        this(context, null, 0);
+    }
+
+    public GameViewActivity(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    public GameViewActivity(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        getHolder().addCallback(this);
+    }
+
+    public void startGame(GameplayActivity gameActivity) {
+        this.gameActivity = gameActivity;
+
+        thread = new MainThread(getHolder(), this);
+        thread.setRunning(true);
+        RUNNING = true;
+        thread.start();
+
+        Constants.CURRENT_Y = 0;
+        Constants.SCORE = 0;
+        Constants.ADDER = 15;
+        showGameOver = false;
+        setFocusable(true);
+
+        player = new RectPlayer(new Rect(0,0,PLAYER_SIZE, PLAYER_SIZE), Color.YELLOW);
+        playerPoint = new Point(Constants.SCREEN_WIDTH/2-PLAYER_SIZE/2,Constants.SCREEN_HEIGHT-7*PLAYER_SIZE);
+
+        om = new ObstacleManager();
+    }
+
+    @Override
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+    }
+
+    @Override
+    public void surfaceCreated(SurfaceHolder holder) {
+    }
+
+    @Override
+    public void surfaceDestroyed(SurfaceHolder holder) {
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        //super.onTouchEvent(event);
+        switch(event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_MOVE:
+                int x = (int)event.getX();
+                playerPoint.set(x, playerPoint.y);
+                break;
+        }
+        return true;
+    }
+
+    public void update() {
+        if(RUNNING) {
+            Constants.CURRENT_Y++;
+            if(!showGameOver)
+                Constants.SCORE = Constants.CURRENT_Y;
+            if (Constants.CURRENT_Y % 100 == 0) {
+                Constants.ADDER++;
+            }
+
+            player.update(playerPoint);
+            om.update();
+
+            int collide = om.playerCollide(player);
+
+            // were testing the top
+            if ((collide & Constants.TOP_COLLISION) == Constants.TOP_COLLISION) {
+                // add the score to it
+                playerPoint.set(playerPoint.x, playerPoint.y + Constants.ADDER);
+            }
+
+            if (player.getRectangle().bottom > Constants.SCREEN_HEIGHT) {
+                showGameOver = true;
+            }
+
+            if(showGameOver) {
+                if(Constants.CURRENT_Y - Constants.SCORE > 30 * 3)  // 3 seconds
+                    RUNNING = false;
+            }
+        } else {
+            try {
+                thread.setRunning(false);
+                //thread.join();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            gameActivity.gameOver();
+        }
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+        super.draw(canvas);
+        canvas.drawColor(Color.LTGRAY);
+        player.draw(canvas);
+        om.draw(canvas);
+
+        Paint paint = new Paint();
+        if(Constants.SCORE > Constants.HIGHSCORE)
+            paint.setColor(Color.GREEN);
+        else
+            paint.setColor(Color.BLUE);
+
+        paint.setTextSize(100);
+
+        canvas.drawText("" + Constants.SCORE, 10, 100, paint);
+        if(showGameOver) {
+            paint.setColor(Color.RED);
+            canvas.drawText("Game Over", Constants.SCREEN_WIDTH/2 - 200, Constants.SCREEN_HEIGHT/2, paint);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*/
+/*
+
+    *//*
+
+*/
+/** Milliseconds for game timer tick *//*
+*/
+/*
+
     public static final long UPDATE_INTERVAL = 50;        // = 20 FPS
 
     private Timer timer = new Timer();
     private TimerTask timerTask;
 
-    /** The surfaceholder needed for the canvas drawing */
+    *//*
+
+*/
+/** The surfaceholder needed for the canvas drawing *//*
+*/
+/*
+
     private SurfaceHolder holder;
 
     private GameplayActivity game;
     private Character player;
     private Background background;
   //  private Frontground frontground;
-    private List<Obstacles> obstacles = new ArrayList<Obstacles>();
+    private List<Obstacle> obstacles = new ArrayList<Obstacle>();
   //  private List<PowerUp> powerUps = new ArrayList<PowerUp>();
 
     private PausedActivity pauseButton;
@@ -57,12 +316,13 @@ public class GameViewActivity extends SurfaceView {
 
     public GameViewActivity(Context context) {
         super(context);
-        this.game = (GameplayActivity) context;
-        setFocusable(true);
+        this(context, null, 0);
+        //this.game = (GameplayActivity) context;
+        //setFocusable(true);
 
-        holder = getHolder();
+        //holder = getHolder();
      //   player = new Bubble(this, game);
-        background = new Background(this, game);
+       // background = new Background(this, game);
       //  frontground = new Frontground(this, game);
      //   pauseButton = new PausedActivity(this, game);
      //   tutorial = new Tutorial(this, game);
@@ -86,12 +346,18 @@ public class GameViewActivity extends SurfaceView {
 
     private void setUpTimerTask() {
         stopTimer();
-      /*  timerTask = new TimerTask() {
+      *//*
+
+*/
+/*  timerTask = new TimerTask() {
             @Override
             public void run() {
                 GameViewActivity.this.run();
             }
-        };*/
+        };*//*
+*/
+/*
+
     }
 
     @Override
@@ -103,7 +369,10 @@ public class GameViewActivity extends SurfaceView {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         performClick();
-      /*  if(event.getAction() == MotionEvent.ACTION_DOWN  // Only for "touchdowns"
+      *//*
+
+*/
+/*  if(event.getAction() == MotionEvent.ACTION_DOWN  // Only for "touchdowns"
                 && !this.player.isDead()){ // No support for dead players
             if(tutorialIsShown){
                 // dismiss tutorial
@@ -117,13 +386,22 @@ public class GameViewActivity extends SurfaceView {
             }else{
                 this.player.onTap();
             }
-        }*/
+        }*//*
+*/
+/*
+
         return true;
     }
 
-    /**
+    *//*
+
+*/
+/**
      * content of the timertask
-     */
+     *//*
+*/
+/*
+
     public void run() {
       //  checkPasses();
        // checkOutOfRange();
@@ -148,16 +426,34 @@ public class GameViewActivity extends SurfaceView {
         return canvas;
     }
 
-    /**
+    *//*
+
+*/
+/**
      * Draw Tutorial
-     */
-  /*  public void showTutorial(){
+     *//*
+*/
+/*
+
+  *//*
+
+*/
+/*  public void showTutorial(){
         player.move();
         pauseButton.move();
 
         while(!holder.getSurface().isValid()){
-            /*wait*/
-   /*         try { Thread.sleep(10); } catch (InterruptedException e) { e.printStackTrace(); }
+            *//*
+
+*/
+/*wait*//*
+*/
+/*
+
+   *//*
+
+*/
+/*         try { Thread.sleep(10); } catch (InterruptedException e) { e.printStackTrace(); }
         }
 
         Canvas canvas = getCanvas();
@@ -165,7 +461,10 @@ public class GameViewActivity extends SurfaceView {
         tutorial.move();
         tutorial.draw(canvas);
         holder.unlockCanvasAndPost(canvas);
-    } */
+    } *//*
+*/
+/*
+
 
     public void pause(){
         stopTimer();
@@ -190,12 +489,24 @@ public class GameViewActivity extends SurfaceView {
         startTimer();
     }
 
-    /**
+    *//*
+
+*/
+/**
      * Draws all gameobjects on the surface
-     */
+     *//*
+*/
+/*
+
     private void draw() {
         while(!holder.getSurface().isValid()){
-            /*wait*/
+            *//*
+
+*/
+/*wait*//*
+*/
+/*
+
             try { Thread.sleep(10); } catch (InterruptedException e) { e.printStackTrace(); }
         }
 
@@ -206,23 +517,35 @@ public class GameViewActivity extends SurfaceView {
         holder.unlockCanvasAndPost(canvas);
     }
 
-    /**
+    *//*
+
+*/
+/**
      * Draws everything normal,
      * except the player will only be drawn, when the parameter is true
      * @param drawPlayer
-     */
+     *//*
+*/
+/*
+
     private void drawCanvas(Canvas canvas, boolean drawPlayer){
         background.draw(canvas);
-        for(Obstacles r : obstacles){
+        for(Obstacle r : obstacles){
             r.draw(canvas);
         }
-   /*   for(PowerUp p : powerUps){
+   *//*
+
+*/
+/*   for(PowerUp p : powerUps){
             p.draw(canvas);
         }
         if(drawPlayer){
             player.draw(canvas);
         }
-        frontground.draw(canvas); */
+        frontground.draw(canvas); *//*
+*/
+/*
+
       //  pauseButton.draw(canvas);
 
         // Score Text
@@ -234,10 +557,19 @@ public class GameViewActivity extends SurfaceView {
        //         0, getScoreTextMetrics(), paint);
     }
 
-    /**
+    *//*
+
+*/
+/**
      * Let the player fall to the ground
-     */
-  /*  private void playerDeadFall(){
+     *//*
+*/
+/*
+
+  *//*
+
+*/
+/*  private void playerDeadFall(){
         player.dead();
         do{
             player.move();
@@ -245,12 +577,24 @@ public class GameViewActivity extends SurfaceView {
             // sleep
             try { Thread.sleep(UPDATE_INTERVAL/4); } catch (InterruptedException e) { e.printStackTrace(); }
         }while(!player.isTouchingGround());
-    } */
+    } *//*
+*/
+/*
 
-    /**
+
+    *//*
+
+*/
+/**
      * Checks whether an obstacle is passed.
-     */
-    /*private void checkPasses(){
+     *//*
+*/
+/*
+
+    *//*
+
+*/
+/*private void checkPasses(){
         for(Obstacle o : obstacles){
             if(o.isPassed()){
                 if(!o.isAlreadyPassed){    // probably not needed
@@ -259,13 +603,25 @@ public class GameViewActivity extends SurfaceView {
                 }
             }
         }
-    }*/
+    }*//*
+*/
+/*
 
 
-    /**
+
+    *//*
+
+*/
+/**
      * Checks collisions and performs the action
-     */
- /*   private void checkCollision(){
+     *//*
+*/
+/*
+
+ *//*
+
+*/
+/*   private void checkCollision(){
         for(Obstacle o : obstacles){
             if(o.isColliding(player)){
                 o.onCollision();
@@ -282,22 +638,37 @@ public class GameViewActivity extends SurfaceView {
         if(player.isTouchingEdge()){
             gameOver();
         }
-    }*/
+    }*//*
+*/
+/*
 
-    /**
+
+    *//*
+
+*/
+/**
      * if no obstacle is present a new one is created
-     */
+     *//*
+*/
+/*
+
     private void createObstacle(){
         if(obstacles.size() < 1){
-            obstacles.add(new Obstacles(this, game));
+            obstacles.add(new Obstacle(this, game));
         }
     }
 
-    /**
+    *//*
+
+*/
+/**
      * Update sprite movements
-     */
+     *//*
+*/
+/*
+
     private void move(){
-        for(Obstacles o : obstacles){
+        for(Obstacle o : obstacles){
             o.setSpeedX(-getSpeedX());
             o.move();
         }
@@ -315,9 +686,15 @@ public class GameViewActivity extends SurfaceView {
 
 //        player.move();
     }
-    /**
+    *//*
+
+*/
+/**
      * return the speed of the obstacles/cow
-     */
+     *//*
+*/
+/*
+
     public int getSpeedX(){
         // 16 @ 720x1280 px
         int speedDefault = this.getWidth() / 45;
@@ -325,27 +702,54 @@ public class GameViewActivity extends SurfaceView {
         // 1,2 every 4 points @ 720x1280 px
      //   int speedIncrease = (int) (this.getWidth() / 600f * (game.accomplishmentBox.points / 4));
 
-        int speed = speedDefault /*+ speedIncrease*/;
+        int speed = speedDefault *//*
+
+*/
+/*+ speedIncrease*//*
+*/
+/*
+;
 
         return Math.min(speed, 2*speedDefault);
     }
 
-    /**
+    *//*
+
+*/
+/**
      * Let's the player fall down dead, makes sure the runcycle stops
      * and invokes the next method for the dialog and stuff.
-     */
+     *//*
+*/
+/*
+
     public void gameOver(){
         pause();
      //   playerDeadFall();
      //   game.GameOverActivity();
     }
 
-    /**
+    *//*
+
+*/
+/**
      * A value for the position and size of the onScreen score Text
-     */
+     *//*
+*/
+/*
+
     public int getScoreTextMetrics(){
         return (int) (this.getHeight() / 21.0f);
-        /*/ game.getResources().getDisplayMetrics().density)*/
+        *//*
+
+*/
+/*//*
+*/
+/*
+ game.getResources().getDisplayMetrics().density)*//*
+*/
+/*
+
     }
 
     public Character getPlayer(){
@@ -355,5 +759,8 @@ public class GameViewActivity extends SurfaceView {
     public GameplayActivity getGame(){
         return this.game;
     }
+*//*
+
 
 }
+*/

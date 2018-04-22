@@ -48,28 +48,22 @@
 
             <TextView
                 android:id="@+id/rankText"
-                android:layout_width="266dp"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="@string/rank"
+                android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                 android:textSize="30dp"
                 tools:layout_editor_absoluteX="72dp"
                 tools:layout_editor_absoluteY="164dp" />
 
             <TextView
-                android:id="@+id/nameText"
-                android:layout_width="195dp"
-                android:layout_height="wrap_content"
-                android:text="@string/name"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-                android:textSize="30dp" />
-
-            <TextView
                 android:id="@+id/timeText"
-                android:layout_width="102dp"
+                android:layout_width="197dp"
                 android:layout_height="wrap_content"
                 android:text="@string/time"
+                android:textAlignment="textStart"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                 android:textSize="30dp" />
 
@@ -89,14 +83,6 @@
                 android:textSize="24dp"
                 tools:layout_editor_absoluteX="72dp"
                 tools:layout_editor_absoluteY="164dp" />
-
-            <TextView
-                android:id="@+id/name1Text"
-                android:layout_width="195dp"
-                android:layout_height="match_parent"
-                android:text="@string/emptyName"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-                android:textSize="24dp" />
 
             <TextView
                 android:id="@+id/time1Text"
@@ -123,14 +109,6 @@
                 tools:layout_editor_absoluteY="164dp" />
 
             <TextView
-                android:id="@+id/name2Text"
-                android:layout_width="195dp"
-                android:layout_height="wrap_content"
-                android:text="@string/emptyName"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-                android:textSize="24dp" />
-
-            <TextView
                 android:id="@+id/time2Text"
                 android:layout_width="102dp"
                 android:layout_height="wrap_content"
@@ -153,14 +131,6 @@
                 android:textSize="24dp"
                 tools:layout_editor_absoluteX="72dp"
                 tools:layout_editor_absoluteY="164dp" />
-
-            <TextView
-                android:id="@+id/name3Text"
-                android:layout_width="195dp"
-                android:layout_height="wrap_content"
-                android:text="@string/emptyName"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-                android:textSize="24dp" />
 
             <TextView
                 android:id="@+id/time3Text"
@@ -187,14 +157,6 @@
                 tools:layout_editor_absoluteY="164dp" />
 
             <TextView
-                android:id="@+id/name4Text"
-                android:layout_width="195dp"
-                android:layout_height="wrap_content"
-                android:text="@string/emptyName"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-                android:textSize="24dp" />
-
-            <TextView
                 android:id="@+id/time4Text"
                 android:layout_width="102dp"
                 android:layout_height="wrap_content"
@@ -217,14 +179,6 @@
                 android:textSize="24dp"
                 tools:layout_editor_absoluteX="72dp"
                 tools:layout_editor_absoluteY="164dp" />
-
-            <TextView
-                android:id="@+id/name5Text"
-                android:layout_width="195dp"
-                android:layout_height="wrap_content"
-                android:text="@string/emptyName"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-                android:textSize="24dp" />
 
             <TextView
                 android:id="@+id/time5Text"

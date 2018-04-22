@@ -21,7 +21,6 @@ import android.os.AsyncTask;
         private static final String SQL_CREATE_ENTRIES =
                 "CREATE TABLE leaderboard (" +
                         "rank INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        "name TEXT, " +
                         "time TEXT)";
 
         private static final String SQL_DELETE_ENTRIES =
