@@ -14,6 +14,14 @@ public class PausedActivity extends AppCompatActivity implements QuitDialog.Quit
         super.onCreate(savedInstanceState);
         setContentView(R.layout.paused);
 
+        Button resumeButton = findViewById(R.id.resumeButton);
+        resumeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         Button pauseButton = findViewById(R.id.quitButton);
         pauseButton.setOnClickListener(new View.OnClickListener() {
             @Override

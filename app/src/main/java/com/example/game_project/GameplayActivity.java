@@ -6,6 +6,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.Image;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,6 +30,10 @@ public class GameplayActivity extends AppCompatActivity{
     final int spikeGap = 350;
     final int spikePixelSpeed = 10;
     Random generator = new Random();
+    final int maxSpikePercent = 75;
+    boolean collided = false;
+    int screenHeight;
+    int screenWidth;
 
 
     @Override
@@ -56,14 +61,14 @@ public class GameplayActivity extends AppCompatActivity{
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        final int screenHeight = displayMetrics.heightPixels*2;
+        screenHeight = displayMetrics.heightPixels*2;
       //  background.setMinimumHeight(screenHeight);
-        final int screenWidth = displayMetrics.widthPixels;
+        screenWidth = displayMetrics.widthPixels;
         final int maxTilt = 10;
      //   final TextView axisX = findViewById(R.id.xAxis);
         //-------
 //--------------------------------------------------------------------------------------------------
-        int initialXY = generator.nextInt(81);
+        int initialXY = generator.nextInt(maxSpikePercent);
         ConstraintLayout.LayoutParams ls1 = (ConstraintLayout.LayoutParams) spikeLeft1.getLayoutParams();
         ConstraintLayout.LayoutParams ls2 = (ConstraintLayout.LayoutParams) spikeLeft2.getLayoutParams();
         ConstraintLayout.LayoutParams ls3 = (ConstraintLayout.LayoutParams) spikeLeft3.getLayoutParams();
@@ -73,14 +78,14 @@ public class GameplayActivity extends AppCompatActivity{
 
         ls1.setMargins(0, 0, screenWidth-(int)(initialXY/100.0*screenWidth), (int)(screenHeight));
         rs1.setMargins(screenWidth-ls1.rightMargin + spikeGap, 0, 0, (screenHeight));
-        initialXY = generator.nextInt(81);
+        initialXY = generator.nextInt(maxSpikePercent);
         spikeLeft1.setLayoutParams(ls1);
         spikeRight1.setLayoutParams(rs1);
 
 
         ls2.setMargins(0, 0, screenWidth-(int)(initialXY/100.0*screenWidth), (int)(screenHeight*1.5));
         rs2.setMargins(screenWidth-ls2.rightMargin + spikeGap, 0, 0, (int)(screenHeight*1.5));
-        initialXY = generator.nextInt(81);
+        initialXY = generator.nextInt(maxSpikePercent);
         spikeLeft2.setLayoutParams(ls2);
         spikeRight2.setLayoutParams(rs2);
 
@@ -120,33 +125,36 @@ public class GameplayActivity extends AppCompatActivity{
         SensorEventListener gyroscopeEventListener = new SensorEventListener() {
             @Override
             public void onSensorChanged(SensorEvent sensorEvent) {
-               double axisY = sensorEvent.values[1] * 180 / Math.PI;
-                double axisZ = sensorEvent.values[2] * 180 / Math.PI;
-                ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) bubble.getLayoutParams();
-                ConstraintLayout.LayoutParams ls1 = (ConstraintLayout.LayoutParams) spikeLeft1.getLayoutParams();
-                ConstraintLayout.LayoutParams ls2 = (ConstraintLayout.LayoutParams) spikeLeft2.getLayoutParams();
-                ConstraintLayout.LayoutParams ls3 = (ConstraintLayout.LayoutParams) spikeLeft3.getLayoutParams();
-                ConstraintLayout.LayoutParams rs1 = (ConstraintLayout.LayoutParams) spikeRight1.getLayoutParams();
-                ConstraintLayout.LayoutParams rs2 = (ConstraintLayout.LayoutParams) spikeRight2.getLayoutParams();
-                ConstraintLayout.LayoutParams rs3 = (ConstraintLayout.LayoutParams) spikeRight3.getLayoutParams();
-                shiftSpike(ls1, spikeLeft1, rs1, spikeRight1, screenHeight, screenWidth);
-                shiftSpike(ls2, spikeLeft2, rs2, spikeRight2, screenHeight, screenWidth);
-                shiftSpike(ls3, spikeLeft3, rs3, spikeRight3, screenHeight, screenWidth);
+                if (collided == false) {
+                    double axisY = sensorEvent.values[1] * 180 / Math.PI;
+                    double axisZ = sensorEvent.values[2] * 180 / Math.PI;
+                    ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) bubble.getLayoutParams();
+                    ConstraintLayout.LayoutParams ls1 = (ConstraintLayout.LayoutParams) spikeLeft1.getLayoutParams();
+                    ConstraintLayout.LayoutParams ls2 = (ConstraintLayout.LayoutParams) spikeLeft2.getLayoutParams();
+                    ConstraintLayout.LayoutParams ls3 = (ConstraintLayout.LayoutParams) spikeLeft3.getLayoutParams();
+                    ConstraintLayout.LayoutParams rs1 = (ConstraintLayout.LayoutParams) spikeRight1.getLayoutParams();
+                    ConstraintLayout.LayoutParams rs2 = (ConstraintLayout.LayoutParams) spikeRight2.getLayoutParams();
+                    ConstraintLayout.LayoutParams rs3 = (ConstraintLayout.LayoutParams) spikeRight3.getLayoutParams();
+                    shiftSpike(ls1, spikeLeft1, rs1, spikeRight1, screenHeight, screenWidth);
+                    shiftSpike(ls2, spikeLeft2, rs2, spikeRight2, screenHeight, screenWidth);
+                    shiftSpike(ls3, spikeLeft3, rs3, spikeRight3, screenHeight, screenWidth);
+                    collided = checkCollision(bubble,spikeLeft1, collided);
+                    collided = checkCollision(bubble,spikeLeft2, collided);
+                    collided = checkCollision(bubble,spikeLeft3, collided);
 
-
-                if (axisY > maxTilt){
-                    lp.setMargins((screenWidth - bubble.getWidth()), 0, 0, (int)(screenHeight/2*.2));
-                    bubble.setLayoutParams(lp);
+                    if (axisY > maxTilt) {
+                        lp.setMargins((screenWidth - bubble.getWidth()), 0, 0, (int) (screenHeight / 2 * .3));
+                        bubble.setLayoutParams(lp);
+                    } else if (axisY < -maxTilt) {
+                        lp.setMargins(0, 0, 0, (int) (screenHeight / 2 * .3));
+                        bubble.setLayoutParams(lp);
+                    } else {
+                        lp.setMargins((int) ((screenWidth / 2 - bubble.getWidth() / 2) + axisY * (screenWidth - bubble.getWidth()) / 2 / maxTilt), 0, 0, (int) (screenHeight / 2 * .3));
+                        bubble.setLayoutParams(lp);
+                        //axisX.setText("Z Axis: " + sensorEvent.values[2] * 180 /Math.PI);
+                    }
                 }
-                else if (axisY < -maxTilt) {
-                    lp.setMargins(0, 0, 0, (int)(screenHeight/2*.2));
-                    bubble.setLayoutParams(lp);
-                }
-                else {
-                    lp.setMargins((int)((screenWidth/2 - bubble.getWidth()/2) + axisY * (screenWidth-bubble.getWidth())/2/maxTilt), 0, 0, (int)(screenHeight/2*.2));
-                    bubble.setLayoutParams(lp);
-                    //axisX.setText("Z Axis: " + sensorEvent.values[2] * 180 /Math.PI);
-                }
+                
             }
 
             @Override
@@ -159,7 +167,8 @@ public class GameplayActivity extends AppCompatActivity{
     }
 
     protected void onPause(Bundle savedInstanceState){
-
+        Intent intent = new Intent(getApplicationContext(), PausedActivity.class);
+        startActivity(intent);
     }
 
     protected void onStop(Bundle savedInstanceState){
@@ -172,7 +181,7 @@ public class GameplayActivity extends AppCompatActivity{
 
     private void shiftSpike(ConstraintLayout.LayoutParams positionLayoutLeft, ImageView spikeLeft, ConstraintLayout.LayoutParams positionLayoutRight, ImageView spikeRight, int screenHeight, int screenWidth){
         if (positionLayoutLeft.topMargin > spikeLeft.getHeight()){
-            int newXY = generator.nextInt(81);
+            int newXY = generator.nextInt(maxSpikePercent);
 
             positionLayoutLeft.setMargins(0, 0, screenWidth-(int)(newXY*screenWidth/100.0), (int)(screenHeight*1.5));
             positionLayoutRight.setMargins(screenWidth-positionLayoutLeft.rightMargin + spikeGap, 0, 0, (int)(screenHeight*1.5));
@@ -194,5 +203,17 @@ public class GameplayActivity extends AppCompatActivity{
         }
         spikeLeft.setLayoutParams(positionLayoutLeft);
         spikeRight.setLayoutParams(positionLayoutRight);
+    }
+
+    public Boolean checkCollision(ImageView bubble, ImageView spikeLeft, boolean collided){
+        if (collided == true)
+            return true;
+        ConstraintLayout.LayoutParams bubblePosition = (ConstraintLayout.LayoutParams) bubble.getLayoutParams();
+        ConstraintLayout.LayoutParams spikeLeftPosition = (ConstraintLayout.LayoutParams) spikeLeft.getLayoutParams();
+        if (bubblePosition.bottomMargin >= spikeLeftPosition.bottomMargin - spikeLeft.getHeight()*2 && bubblePosition.bottomMargin <= spikeLeftPosition.bottomMargin + bubble.getHeight()*2){
+            if (bubblePosition.leftMargin <= screenWidth-spikeLeftPosition.rightMargin || bubblePosition.leftMargin >= screenWidth-spikeLeftPosition.rightMargin + spikeGap)
+            return true;
+        }
+        return false;
     }
 }

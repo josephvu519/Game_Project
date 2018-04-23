@@ -110,6 +110,7 @@
         android:layout_height="70dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/continuousScrollableImageView"
         scrolling_image_view:srcCompat="@drawable/bubble" />
 
         <TextView
@@ -125,7 +126,4 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
->>>>>>> b2e2e6090d93165211c0f28e10a08cef59e5dada
-
 </android.support.constraint.ConstraintLayout>
