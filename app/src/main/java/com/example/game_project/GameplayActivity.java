@@ -7,24 +7,25 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.Image;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.game_project.Accessories.Timer;
-
+import java.util.List;
 import java.util.Random;
 
 public class GameplayActivity extends AppCompatActivity{
-
 
     //GameViewActivity view;
     final int spikeGap = 350;
@@ -34,20 +35,13 @@ public class GameplayActivity extends AppCompatActivity{
     boolean collided = false;
     int screenHeight;
     int screenWidth;
-
-
+    TextView timer;
     @Override
     protected void onCreate(Bundle savedInstanceState){
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gameplay);
-        final Timer timer = new Timer();
-
-
-       // view = new GameViewActivity(this);
-      //  setContentView(view);
-       // ScrollingImageView background = findViewById(R.id.scrolling_background);
-
+        timer = (TextView)findViewById(R.id.timer);
         //TEST
         final ImageView bubble = findViewById(R.id.bubble);
         final ImageView spikeLeft1 = findViewById(R.id.spikeLeft1);
@@ -56,7 +50,6 @@ public class GameplayActivity extends AppCompatActivity{
         final ImageView spikeRight1 = findViewById(R.id.spikeRight1);
         final ImageView spikeRight2 = findViewById(R.id.spikeRight2);
         final ImageView spikeRight3 = findViewById(R.id.spikeRight3);
-
 
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -108,18 +101,6 @@ public class GameplayActivity extends AppCompatActivity{
             }
         });
 
-      //  Button kysButton = findViewById(R.id.kysButton);
-      /*  kysButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), GameOverActivity.class);
-                startActivity(intent);
-
-                timer.getElapsedTimeString();
-            }
-        });*/
-
-
         SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         Sensor rotationSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GAME_ROTATION_VECTOR);
         SensorEventListener gyroscopeEventListener = new SensorEventListener() {
@@ -153,8 +134,9 @@ public class GameplayActivity extends AppCompatActivity{
                         bubble.setLayoutParams(lp);
                         //axisX.setText("Z Axis: " + sensorEvent.values[2] * 180 /Math.PI);
                     }
+                    timer.setText("10");
                 }
-                
+
             }
 
             @Override
@@ -216,4 +198,5 @@ public class GameplayActivity extends AppCompatActivity{
         }
         return false;
     }
+
 }

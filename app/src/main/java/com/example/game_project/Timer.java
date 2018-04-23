@@ -19,7 +19,7 @@
 
 public class Timer extends AppCompatActivity
 {
-    TextView timer ;
+    TextView timer;
     Button start, pause;
     long MillisecondTime, StartTime, TimeBuff, UpdateTime = 0L ;
     Handler handler;
@@ -33,7 +33,7 @@ public class Timer extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.gameplay);
+        setContentView(R.layout.activity_main);
 
         timer = (TextView)findViewById(R.id.timer);
         start = (Button)findViewById(R.id.startButton);
