@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         app:direction="down"
-        app:duration="2500"
+        app:duration="5000"
         app:imageSrc="@drawable/background"
         app:scaleType="centerInside">
 
@@ -37,96 +37,79 @@
 
     <ImageView
         android:id="@+id/spikeLeft1"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_weight="1"
-        app:layout_constraintBottom_toTopOf="@+id/continuousScrollableImageView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/continuousScrollableImageView"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/continuousScrollableImageView"
+        app:layout_constraintTop_toBottomOf="@+id/continuousScrollableImageView"
         scrolling_image_view:srcCompat="@drawable/spikeleft" />
 
     <ImageView
         android:id="@+id/spikeRight1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        app:layout_constraintBottom_toTopOf="@+id/continuousScrollableImageView"
-        app:layout_constraintEnd_toStartOf="@+id/continuousScrollableImageView"
+        android:rotation="180"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/continuousScrollableImageView"
         scrolling_image_view:srcCompat="@drawable/spikeleft" />
 
     <ImageView
         android:id="@+id/spikeLeft2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        app:layout_constraintBottom_toTopOf="@+id/continuousScrollableImageView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/continuousScrollableImageView"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/continuousScrollableImageView"
+        app:layout_constraintTop_toBottomOf="@+id/continuousScrollableImageView"
         scrolling_image_view:srcCompat="@drawable/spikeleft" />
 
     <ImageView
         android:id="@+id/spikeRight2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        app:layout_constraintBottom_toTopOf="@+id/continuousScrollableImageView"
-        app:layout_constraintEnd_toStartOf="@+id/continuousScrollableImageView"
+        android:rotation="180"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/continuousScrollableImageView"
         scrolling_image_view:srcCompat="@drawable/spikeleft" />
 
     <ImageView
         android:id="@+id/spikeLeft3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        app:layout_constraintBottom_toTopOf="@+id/continuousScrollableImageView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/continuousScrollableImageView"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_alignParentTop="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/continuousScrollableImageView"
+        app:layout_constraintTop_toBottomOf="@+id/continuousScrollableImageView"
         scrolling_image_view:srcCompat="@drawable/spikeleft" />
 
     <ImageView
         android:id="@+id/spikeRight3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
+        android:rotation="180"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/continuousScrollableImageView"
-        app:layout_constraintHorizontal_bias="0.059"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/continuousScrollableImageView"
-        app:layout_constraintVertical_bias="1.0"
         scrolling_image_view:srcCompat="@drawable/spikeleft" />
 
-    <RelativeLayout
-        android:id="@+id/bubbleLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        scrolling_image_view:layout_constraintStart_toStartOf="parent"
-        scrolling_image_view:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/bubble"
-            android:layout_width="96dp"
-            android:layout_height="67dp"
-            scrolling_image_view:layout_constraintBottom_toBottomOf="parent"
-            scrolling_image_view:layout_constraintEnd_toEndOf="parent"
-            scrolling_image_view:layout_constraintStart_toStartOf="parent"
-            scrolling_image_view:layout_constraintTop_toTopOf="parent"
-            scrolling_image_view:srcCompat="@drawable/bubble" />
-
-    </RelativeLayout>
+    <ImageView
+        android:id="@+id/bubble"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        scrolling_image_view:srcCompat="@drawable/bubble" />
 
 </android.support.constraint.ConstraintLayout>
