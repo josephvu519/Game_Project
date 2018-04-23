@@ -35,6 +35,8 @@ public class GameplayActivity extends AppCompatActivity{
     boolean collided = false;
     int screenHeight;
     int screenWidth;
+    boolean gameEnded = false;
+
     TextView timer;
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -136,6 +138,12 @@ public class GameplayActivity extends AppCompatActivity{
                     }
                     timer.setText("10");
                 }
+                else if(gameEnded == false){
+                    gameEnded = true;
+                    Bundle instanceState = new Bundle();
+                    instanceState.putString("time", "32:09");
+                    onStop(instanceState);
+                }
 
             }
 
@@ -154,7 +162,8 @@ public class GameplayActivity extends AppCompatActivity{
     }
 
     protected void onStop(Bundle savedInstanceState){
-
+        Intent intent = new Intent(getApplicationContext(), GameOverActivity.class);
+        startActivity(intent);
     }
 
     protected void onResume(Bundle savedInstanceSteate){
