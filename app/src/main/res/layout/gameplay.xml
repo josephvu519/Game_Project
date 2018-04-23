@@ -34,7 +34,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <ImageView
         android:id="@+id/spikeLeft1"
         android:layout_width="wrap_content"
@@ -104,6 +103,7 @@
         app:layout_constraintTop_toBottomOf="@+id/continuousScrollableImageView"
         scrolling_image_view:srcCompat="@drawable/spikeleft" />
 
+
     <ImageView
         android:id="@+id/bubble"
         android:layout_width="70dp"
@@ -111,5 +111,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         scrolling_image_view:srcCompat="@drawable/bubble" />
+
+        <TextView
+            android:id="@+id/timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/timer"
+            android:textColor="@android:color/black"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+>>>>>>> b2e2e6090d93165211c0f28e10a08cef59e5dada
 
 </android.support.constraint.ConstraintLayout>
