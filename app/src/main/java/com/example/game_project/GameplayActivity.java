@@ -36,6 +36,8 @@ public class GameplayActivity extends AppCompatActivity{
     int screenHeight;
     int screenWidth;
     boolean gameEnded = false;
+    boolean pointCheck = false;
+    int score = 0;
 
     TextView timer;
     @Override
@@ -124,6 +126,10 @@ public class GameplayActivity extends AppCompatActivity{
                     collided = checkCollision(bubble,spikeLeft1, collided);
                     collided = checkCollision(bubble,spikeLeft2, collided);
                     collided = checkCollision(bubble,spikeLeft3, collided);
+                    pointAdd(bubble, spikeLeft1, collided);
+                    pointAdd(bubble, spikeLeft2, collided);
+                    pointAdd(bubble, spikeLeft3, collided);
+
 
                     if (axisY > maxTilt) {
                         lp.setMargins((screenWidth - bubble.getWidth()), 0, 0, (int) (screenHeight / 2 * .3));
@@ -136,9 +142,9 @@ public class GameplayActivity extends AppCompatActivity{
                         bubble.setLayoutParams(lp);
                         //axisX.setText("Z Axis: " + sensorEvent.values[2] * 180 /Math.PI);
                     }
-                    timer.setText("10");
+                    timer.setText(Integer.toString(score));
                 }
-                else if(gameEnded == false){
+               else if(gameEnded == false){
                     gameEnded = true;
                     Bundle instanceState = new Bundle();
                     instanceState.putString("time", "32:09");
@@ -206,6 +212,24 @@ public class GameplayActivity extends AppCompatActivity{
             return true;
         }
         return false;
+
+
     }
+    public void pointAdd (ImageView bubble, ImageView spikeLeft, boolean collided){
+        ConstraintLayout.LayoutParams bubblePosition = (ConstraintLayout.LayoutParams) bubble.getLayoutParams();
+        ConstraintLayout.LayoutParams spikeLeftPosition = (ConstraintLayout.LayoutParams) spikeLeft.getLayoutParams();
+        if (bubblePosition.bottomMargin >= spikeLeftPosition.bottomMargin - spikeLeft.getHeight()*2 && bubblePosition.bottomMargin <= spikeLeftPosition.bottomMargin + bubble.getHeight()*2){
+            pointCheck = true;
+        }
+        if(pointCheck){
+
+            if(bubblePosition.bottomMargin >= spikeLeftPosition.bottomMargin + bubble.getHeight()*2){
+                pointCheck = false;
+                timer.setText(Integer.toString(score += 10));
+
+            }
+        }
+    }
+
 
 }

@@ -15,9 +15,11 @@ public class GameOverActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gameover);
+        TextView timeText = findViewById(R.id.timeText);
+        int score = getIntent().getIntExtra("score", 0);
+        timeText.setText(score + "");
 
-        /*TextView timeText = findViewById(R.id.timeText);
-        timeText.setText(savedInstanceState.getString("time"));*/
+        //timeText.setText(savedInstanceState.getString());
 
         Button playAgainButton = findViewById(R.id.playAgainButton);
         playAgainButton.setOnClickListener(new View.OnClickListener() {
