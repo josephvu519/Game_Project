@@ -16,8 +16,8 @@ public class GameOverActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gameover);
         TextView timeText = findViewById(R.id.timeText);
-        int score = getIntent().getIntExtra("SCORE", 0);
-        timeText.setText(score + "M");
+        int score = getIntent().getIntExtra("score", 0);
+        timeText.setText(score + "");
 
         //timeText.setText(savedInstanceState.getString());
 
@@ -25,9 +25,7 @@ public class GameOverActivity extends AppCompatActivity {
         playAgainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), GameplayActivity.class);
                 finish();
-                startActivity(intent);
             }
         });
 
