@@ -226,6 +226,7 @@ public class GameplayActivity extends AppCompatActivity{
             if(bubblePosition.bottomMargin >= spikeLeftPosition.bottomMargin + bubble.getHeight()*2){
                 pointCheck = false;
                 timer.setText(Integer.toString(score += 10));
+                //score
 
             }
         }
