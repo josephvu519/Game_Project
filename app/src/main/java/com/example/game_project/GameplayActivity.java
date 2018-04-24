@@ -38,6 +38,7 @@ public class GameplayActivity extends AppCompatActivity{
     boolean gameEnded = false;
     boolean pointCheck = false;
     int score = 0;
+    boolean pause = false;
 
     TextView timer;
     @Override
@@ -142,13 +143,14 @@ public class GameplayActivity extends AppCompatActivity{
                         bubble.setLayoutParams(lp);
                         //axisX.setText("Z Axis: " + sensorEvent.values[2] * 180 /Math.PI);
                     }
-                    timer.setText(Integer.toString(score));
+                    timer.setText(Integer.toString(score) + "M");
                 }
                else if(gameEnded == false){
                     gameEnded = true;
                     Bundle instanceState = new Bundle();
                     instanceState.putString("time", "32:09");
                     onStop(instanceState);
+
                 }
 
             }
@@ -168,8 +170,13 @@ public class GameplayActivity extends AppCompatActivity{
     }
 
     protected void onStop(Bundle savedInstanceState){
+
+
         Intent intent = new Intent(getApplicationContext(), GameOverActivity.class);
+        intent.putExtra("SCORE", score);
         startActivity(intent);
+
+
     }
 
     protected void onResume(Bundle savedInstanceSteate){
@@ -225,8 +232,12 @@ public class GameplayActivity extends AppCompatActivity{
 
             if(bubblePosition.bottomMargin >= spikeLeftPosition.bottomMargin + bubble.getHeight()*2){
                 pointCheck = false;
+<<<<<<< HEAD
                 timer.setText(Integer.toString(score += 10));
                 //score
+=======
+                timer.setText(Integer.toString(score += 10) + "M");
+>>>>>>> parent of f6a2c2f... Revert "shit"
 
             }
         }
