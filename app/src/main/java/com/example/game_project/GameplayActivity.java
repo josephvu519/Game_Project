@@ -232,12 +232,12 @@ public class GameplayActivity extends AppCompatActivity{
 
             if(bubblePosition.bottomMargin >= spikeLeftPosition.bottomMargin + bubble.getHeight()*2){
                 pointCheck = false;
-<<<<<<< HEAD
+
                 timer.setText(Integer.toString(score += 10));
                 //score
-=======
+
                 timer.setText(Integer.toString(score += 10) + "M");
->>>>>>> parent of f6a2c2f... Revert "shit"
+
 
             }
         }
