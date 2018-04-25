@@ -9,7 +9,6 @@
     <string name="music">Music</string>
     <string name="soundFX">Sound FX</string>
     <string name="scoreText">Score: </string>
-    <string name="score">0M</string>
     <string name="playAgain">Play Again</string>
     <string name="quit">Quit</string>
     <string name="title_activity_pause_menu">PauseMenu</string>
@@ -21,7 +20,7 @@
     <string name="mainMenu">Main Menu</string>
     <string name="rank">Rank</string>
     <string name="name">Name</string>
-    <string name="time">Time</string>
+    <string name="score">Score</string>
     <string name="leaderboards">Leaderboards</string>
     <string name="backArrow"><![CDATA[<]]></string>
     <string name="rank1">1</string>
@@ -29,6 +28,7 @@
     <string name="rank3">3</string>
     <string name="rank4">4</string>
     <string name="rank5">5</string>
-    <string name="emptyTime">--:--</string>
+    <string name="emptyScore">-----</string>
     <string name="emptyName">---</string>
+    <string name="cleardb">Clear Leaderboards</string>
 </resources>
