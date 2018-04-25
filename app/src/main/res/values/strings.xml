@@ -31,4 +31,6 @@
     <string name="emptyScore">-----</string>
     <string name="emptyName">---</string>
     <string name="cleardb">Clear Leaderboards</string>
+    <string name="tutorial">Enable Tutorial</string>
+    <string name="difficulty">Difficulty</string>
 </resources>

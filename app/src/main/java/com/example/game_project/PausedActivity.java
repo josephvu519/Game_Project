@@ -19,10 +19,11 @@ public class PausedActivity extends AppCompatActivity implements QuitDialog.Quit
         setContentView(R.layout.paused);
 
         Context context = getApplicationContext();
-        sharedPreferences = context.getSharedPreferences("gamePaused", Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences("Settings", Context.MODE_PRIVATE);
         final SharedPreferences.Editor settingsEditor = sharedPreferences.edit();
         settingsEditor.putBoolean("paused", true);
         settingsEditor.apply();
+
 
         Button resumeButton = findViewById(R.id.resumeButton);
         resumeButton.setOnClickListener(new View.OnClickListener() {
@@ -47,6 +48,7 @@ public class PausedActivity extends AppCompatActivity implements QuitDialog.Quit
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 finish();
                 startActivity(intent);
             }

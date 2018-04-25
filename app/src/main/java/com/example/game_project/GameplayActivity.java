@@ -32,7 +32,7 @@ public class GameplayActivity extends AppCompatActivity{
     SharedPreferences sharedPreferences;
 
     final int spikeGap = 350;
-    final int spikePixelSpeed = 10;
+    int spikePixelSpeed;
     Random generator = new Random();
     final int maxSpikePercent = 70;
     boolean collided = false;
@@ -58,17 +58,20 @@ public class GameplayActivity extends AppCompatActivity{
         final ImageView spikeRight3 = findViewById(R.id.spikeRight3);
 
         Context context = getApplicationContext();
-        sharedPreferences = context.getSharedPreferences("gamePaused", Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences("Settings", Context.MODE_PRIVATE);
         SharedPreferences.Editor settingsEditor = sharedPreferences.edit();
         settingsEditor.putBoolean("paused", false);
         settingsEditor.apply();
+
+        spikePixelSpeed = sharedPreferences.getInt("difficulty", 1);
+        spikePixelSpeed *= 10;
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         screenHeight = displayMetrics.heightPixels*2;
       //  background.setMinimumHeight(screenHeight);
         screenWidth = displayMetrics.widthPixels;
-        final int maxTilt = 10;
+        final int maxTilt = 30;
      //   final TextView axisX = findViewById(R.id.xAxis);
         //-------
 //--------------------------------------------------------------------------------------------------
@@ -99,10 +102,11 @@ public class GameplayActivity extends AppCompatActivity{
         spikeRight3.setLayoutParams(rs3);
         //--------------------------------------------------------------------------------------------------
 
-        Toast instruction = Toast.makeText(this, "Tilt the screen to move", Toast.LENGTH_LONG);
-        instruction.setGravity(Gravity.TOP, 0, 0);
-        instruction.show();
-
+        if (sharedPreferences.getBoolean("tutorial", true)) {
+            Toast instruction = Toast.makeText(this, "Tilt the screen to move", Toast.LENGTH_LONG);
+            instruction.setGravity(Gravity.TOP, 0, 0);
+            instruction.show();
+        }
         Button pauseButton = findViewById(R.id.pauseButton);
         pauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,14 +120,32 @@ public class GameplayActivity extends AppCompatActivity{
         });
 
         final SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        final Sensor rotationSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GAME_ROTATION_VECTOR);
+        final Sensor rotationSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         SensorEventListener gyroscopeEventListener = new SensorEventListener() {
+            final float[] mAccelerometerReading = new float[3];
+            final float[] mMagnetometerReading = new float[3];
+
+            final float[] mRotationMatrix = new float[9];
+            final float[] mOrientationAngles = new float[3];
+            double axisY = 0;
+            final double alpha = .05;
             @Override
             public void onSensorChanged(SensorEvent sensorEvent) {
                 if (sharedPreferences.getBoolean("paused", false) == false) {
                     if (collided == false) {
 
-                        double axisY = sensorEvent.values[1] * 180 / Math.PI;
+                        updateOrientationAngles();
+                        if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+                            System.arraycopy(sensorEvent.values, 0, mAccelerometerReading,
+                                    0, mAccelerometerReading.length);
+                        } else if (sensorEvent.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
+                            System.arraycopy(sensorEvent.values, 0, mMagnetometerReading,
+                                    0, mMagnetometerReading.length);
+                        }
+
+                        axisY = axisY * (1 - alpha) + alpha * mOrientationAngles[2];
+                        axisY *= 100;
+                        //double axisY = sensorEvent.values[1] * 180 / Math.PI;
 
                         ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) bubble.getLayoutParams();
                         ConstraintLayout.LayoutParams ls1 = (ConstraintLayout.LayoutParams) spikeLeft1.getLayoutParams();
@@ -142,17 +164,19 @@ public class GameplayActivity extends AppCompatActivity{
                         pointAdd(bubble, spikeLeft2);
                         pointAdd(bubble, spikeLeft3);
 
-
-                        if (axisY > maxTilt) {
-                            lp.setMargins((screenWidth - bubble.getWidth()), 0, 0, (int) (screenHeight / 2 * .3));
-                            bubble.setLayoutParams(lp);
-                        } else if (axisY < -maxTilt) {
-                            lp.setMargins(0, 0, 0, (int) (screenHeight / 2 * .3));
-                            bubble.setLayoutParams(lp);
-                        } else {
-                            lp.setMargins((int) ((screenWidth / 2 - bubble.getWidth() / 2) + axisY * (screenWidth - bubble.getWidth()) / 2 / maxTilt), 0, 0, (int) (screenHeight / 2 * .3));
-                            bubble.setLayoutParams(lp);
+                        if (!collided) {
+                            if (axisY > maxTilt) {
+                                lp.setMargins((screenWidth - bubble.getWidth()), 0, 0, (int) (screenHeight / 2 * .3));
+                                bubble.setLayoutParams(lp);
+                            } else if (axisY < -maxTilt) {
+                                lp.setMargins(0, 0, 0, (int) (screenHeight / 2 * .3));
+                                bubble.setLayoutParams(lp);
+                            } else {
+                                lp.setMargins((int) ((screenWidth / 2 - bubble.getWidth() / 2) + axisY * (screenWidth - bubble.getWidth()) / 2 / maxTilt), 0, 0, (int) (screenHeight / 2 * .3));
+                                bubble.setLayoutParams(lp);
+                            }
                         }
+                        axisY /= 100;
                         scorer.setText(Integer.toString(score));
                     } else if (gameEnded == false) {
                         gameEnded = true;
@@ -167,8 +191,22 @@ public class GameplayActivity extends AppCompatActivity{
             @Override
             public void onAccuracyChanged(Sensor sensor, int i) {
             }
+
+            public void updateOrientationAngles() {
+                // Update rotation matrix, which is needed to update orientation angles.
+                sensorManager.getRotationMatrix(mRotationMatrix, null,
+                        mAccelerometerReading, mMagnetometerReading);
+
+                // "mRotationMatrix" now has up-to-date information.
+
+                sensorManager.getOrientation(mRotationMatrix, mOrientationAngles);
+
+                // "mOrientationAngles" now has up-to-date information.
+            }
         };
-        sensorManager.registerListener(gyroscopeEventListener, rotationSensor, SensorManager.SENSOR_DELAY_FASTEST);
+        sensorManager.registerListener(gyroscopeEventListener, rotationSensor, SensorManager.SENSOR_DELAY_GAME);
+        sensorManager.registerListener(gyroscopeEventListener, sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD), SensorManager.SENSOR_DELAY_GAME);
+
 
     }
 
