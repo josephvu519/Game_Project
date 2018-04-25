@@ -1,11 +1,8 @@
 package com.example.game_project;
 
-import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.database.Cursor;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -45,9 +42,9 @@ public class LeaderboardsActivity extends AppCompatActivity implements ClearDial
             @Override
             public void onDBReady(SQLiteDatabase db) {
                 theDB = db;
-                ContentValues values = new ContentValues();
+                //ContentValues values = new ContentValues();
 
-                long newRowID = theDB.insert("leaderboard", null, values);
+                //long newRowID = theDB.insert("leaderboard", null, values);
                 TextView[] scoreText = new TextView[5];
                 scoreText[0] = findViewById(R.id.score1Text);
                 scoreText[1] = findViewById(R.id.score2Text);
@@ -55,6 +52,7 @@ public class LeaderboardsActivity extends AppCompatActivity implements ClearDial
                 scoreText[3] = findViewById(R.id.score4Text);
                 scoreText[4] = findViewById(R.id.score5Text);
                 String[] columns = {"score"};
+
                 Cursor c = theDB.query("leaderboard", columns,null, null,null,null,"score desc");
               if (c.moveToFirst()) {
                   int x = 0;

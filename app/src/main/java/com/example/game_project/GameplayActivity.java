@@ -41,6 +41,7 @@ public class GameplayActivity extends AppCompatActivity{
     boolean gameEnded = false;
     boolean pointCheck = false;
     int score = 0;
+    int scoreAdder;
     TextView scorer;
 
     @Override
@@ -62,6 +63,13 @@ public class GameplayActivity extends AppCompatActivity{
         SharedPreferences.Editor settingsEditor = sharedPreferences.edit();
         settingsEditor.putBoolean("paused", false);
         settingsEditor.apply();
+
+        if (sharedPreferences.getInt("difficulty", 1) == 3)
+            scoreAdder = 20;
+        else if (sharedPreferences.getInt("difficulty", 1) == 2)
+            scoreAdder = 15;
+        else
+            scoreAdder = 10;
 
         spikePixelSpeed = sharedPreferences.getInt("difficulty", 1);
         spikePixelSpeed *= 10;
@@ -274,8 +282,7 @@ public class GameplayActivity extends AppCompatActivity{
 
             if(bubblePosition.bottomMargin >= spikeLeftPosition.bottomMargin + bubble.getHeight()*2){
                 pointCheck = false;
-
-                scorer.setText(Integer.toString(score += 10));
+                scorer.setText(Integer.toString(score += scoreAdder));
 
 
             }
