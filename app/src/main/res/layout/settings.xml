@@ -49,13 +49,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="25dp"
         android:fontFamily="casual"
         android:text="@string/soundFX"
         android:textSize="30dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/difficultySetting" />
+        app:layout_constraintTop_toBottomOf="@+id/settingsText" />
 
     <TextView
         android:id="@+id/musicText"
@@ -124,61 +124,4 @@
         app:layout_constraintHorizontal_bias="0.671"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bgmBar" />
-
-    <CheckBox
-        android:id="@+id/tutorialBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="casual"
-        android:text="@string/tutorial"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settingsText" />
-
-    <TextView
-        android:id="@+id/difficultyText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="casual"
-        android:text="@string/difficulty"
-        android:textSize="30dp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tutorialBox" />
-
-    <RatingBar
-        android:id="@+id/difficultySetting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:numStars="3"
-        android:stepSize="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/difficultyText"
-        app:layout_constraintTop_toBottomOf="@+id/difficultyText" />
-
-    <TextView
-        android:id="@+id/difficultyDisplay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="casual"
-        android:text="@string/emptyName"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/soundText"
-        app:layout_constraintEnd_toStartOf="@+id/difficultySetting"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/difficultyText" />
 </android.support.constraint.ConstraintLayout>

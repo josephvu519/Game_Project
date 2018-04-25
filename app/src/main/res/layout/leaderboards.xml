@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:fontFamily="casual"
         android:text="@string/leaderboards"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
@@ -35,11 +35,12 @@
     <TableLayout
         android:layout_width="368dp"
         android:layout_height="367dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.97">
 
         <TableRow
             android:layout_width="match_parent"
@@ -58,10 +59,10 @@
                 tools:layout_editor_absoluteY="164dp" />
 
             <TextView
-                android:id="@+id/scoreText"
+                android:id="@+id/timeText"
                 android:layout_width="197dp"
                 android:layout_height="wrap_content"
-                android:text="@string/scoreText"
+                android:text="@string/time"
                 android:textAlignment="textStart"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                 android:textSize="30dp" />
@@ -84,15 +85,14 @@
                 tools:layout_editor_absoluteY="164dp" />
 
             <TextView
-                android:id="@+id/score1Text"
+                android:id="@+id/time1Text"
                 android:layout_width="102dp"
                 android:layout_height="wrap_content"
-                android:text="@string/emptyScore"
+                android:text="@string/emptyTime"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                 android:textSize="24dp" />
 
         </TableRow>
-
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -109,15 +109,14 @@
                 tools:layout_editor_absoluteY="164dp" />
 
             <TextView
-                android:id="@+id/score2Text"
+                android:id="@+id/time2Text"
                 android:layout_width="102dp"
                 android:layout_height="wrap_content"
-                android:text="@string/emptyScore"
+                android:text="@string/emptyTime"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                 android:textSize="24dp" />
 
         </TableRow>
-
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -134,15 +133,14 @@
                 tools:layout_editor_absoluteY="164dp" />
 
             <TextView
-                android:id="@+id/score3Text"
+                android:id="@+id/time3Text"
                 android:layout_width="102dp"
                 android:layout_height="wrap_content"
-                android:text="@string/emptyScore"
+                android:text="@string/emptyTime"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                 android:textSize="24dp" />
 
         </TableRow>
-
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -159,15 +157,14 @@
                 tools:layout_editor_absoluteY="164dp" />
 
             <TextView
-                android:id="@+id/score4Text"
+                android:id="@+id/time4Text"
                 android:layout_width="102dp"
                 android:layout_height="wrap_content"
-                android:text="@string/emptyScore"
+                android:text="@string/emptyTime"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                 android:textSize="24dp" />
 
         </TableRow>
-
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -184,25 +181,15 @@
                 tools:layout_editor_absoluteY="164dp" />
 
             <TextView
-                android:id="@+id/score5Text"
+                android:id="@+id/time5Text"
                 android:layout_width="102dp"
                 android:layout_height="wrap_content"
-                android:text="@string/emptyScore"
+                android:text="@string/emptyTime"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                 android:textSize="24dp" />
 
         </TableRow>
 
     </TableLayout>
-
-    <Button
-        android:id="@+id/clearData"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/cleardb"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
