@@ -9,6 +9,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.Image;
+import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.support.constraint.ConstraintLayout;
@@ -139,6 +140,7 @@ public class GameplayActivity extends AppCompatActivity{
             final double alpha = .05;
             @Override
             public void onSensorChanged(SensorEvent sensorEvent) {
+
                 if (sharedPreferences.getBoolean("paused", false) == false) {
                     if (collided == false) {
 
@@ -187,6 +189,10 @@ public class GameplayActivity extends AppCompatActivity{
                         axisY /= 100;
                         scorer.setText(Integer.toString(score));
                     } else if (gameEnded == false) {
+                        MediaPlayer mp = MediaPlayer.create(getApplicationContext(),R.raw.pop);
+                        mp.setVolume(sharedPreferences.getInt("sfxVolume",100),sharedPreferences.getInt("sfxVolume",100));
+                        mp.start();
+                       // mp.reset();
                         gameEnded = true;
                         Intent intent = new Intent(getApplicationContext(), GameOverActivity.class);
                         intent.putExtra("SCORE", score);
