@@ -1,7 +1,9 @@
 package com.example.game_project;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -27,26 +29,25 @@ import java.util.Random;
 
 public class GameplayActivity extends AppCompatActivity{
 
-    //GameViewActivity view;
+    SharedPreferences sharedPreferences;
+
     final int spikeGap = 350;
-    final int spikePixelSpeed = 10;
+    int spikePixelSpeed;
     Random generator = new Random();
-    final int maxSpikePercent = 75;
+    final int maxSpikePercent = 70;
     boolean collided = false;
     int screenHeight;
     int screenWidth;
     boolean gameEnded = false;
     boolean pointCheck = false;
     int score = 0;
-    boolean pause = false;
+    TextView scorer;
 
-    TextView timer;
     @Override
     protected void onCreate(Bundle savedInstanceState){
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gameplay);
-        timer = (TextView)findViewById(R.id.timer);
+        scorer = (TextView)findViewById(R.id.score);
         //TEST
         final ImageView bubble = findViewById(R.id.bubble);
         final ImageView spikeLeft1 = findViewById(R.id.spikeLeft1);
@@ -56,13 +57,21 @@ public class GameplayActivity extends AppCompatActivity{
         final ImageView spikeRight2 = findViewById(R.id.spikeRight2);
         final ImageView spikeRight3 = findViewById(R.id.spikeRight3);
 
+        Context context = getApplicationContext();
+        sharedPreferences = context.getSharedPreferences("Settings", Context.MODE_PRIVATE);
+        SharedPreferences.Editor settingsEditor = sharedPreferences.edit();
+        settingsEditor.putBoolean("paused", false);
+        settingsEditor.apply();
+
+        spikePixelSpeed = sharedPreferences.getInt("difficulty", 1);
+        spikePixelSpeed *= 10;
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         screenHeight = displayMetrics.heightPixels*2;
       //  background.setMinimumHeight(screenHeight);
         screenWidth = displayMetrics.widthPixels;
-        final int maxTilt = 10;
+        final int maxTilt = 30;
      //   final TextView axisX = findViewById(R.id.xAxis);
         //-------
 //--------------------------------------------------------------------------------------------------
@@ -93,94 +102,127 @@ public class GameplayActivity extends AppCompatActivity{
         spikeRight3.setLayoutParams(rs3);
         //--------------------------------------------------------------------------------------------------
 
-        Toast instruction = Toast.makeText(this, "Tilt the screen to move", Toast.LENGTH_LONG);
-        instruction.setGravity(Gravity.TOP, 0, 0);
-        instruction.show();
-
+        if (sharedPreferences.getBoolean("tutorial", true)) {
+            Toast instruction = Toast.makeText(this, "Tilt the screen to move", Toast.LENGTH_LONG);
+            instruction.setGravity(Gravity.TOP, 0, 0);
+            instruction.show();
+        }
         Button pauseButton = findViewById(R.id.pauseButton);
         pauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences.Editor settingsEditor = sharedPreferences.edit();
+                settingsEditor.putBoolean("paused", true);
+                settingsEditor.apply();
                 Intent intent = new Intent(getApplicationContext(), PausedActivity.class);
                 startActivity(intent);
             }
         });
 
-        SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        Sensor rotationSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GAME_ROTATION_VECTOR);
+        final SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        final Sensor rotationSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         SensorEventListener gyroscopeEventListener = new SensorEventListener() {
+            final float[] mAccelerometerReading = new float[3];
+            final float[] mMagnetometerReading = new float[3];
+
+            final float[] mRotationMatrix = new float[9];
+            final float[] mOrientationAngles = new float[3];
+            double axisY = 0;
+            final double alpha = .05;
             @Override
             public void onSensorChanged(SensorEvent sensorEvent) {
-                if (collided == false) {
-                    double axisY = sensorEvent.values[1] * 180 / Math.PI;
-                    double axisZ = sensorEvent.values[2] * 180 / Math.PI;
-                    ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) bubble.getLayoutParams();
-                    ConstraintLayout.LayoutParams ls1 = (ConstraintLayout.LayoutParams) spikeLeft1.getLayoutParams();
-                    ConstraintLayout.LayoutParams ls2 = (ConstraintLayout.LayoutParams) spikeLeft2.getLayoutParams();
-                    ConstraintLayout.LayoutParams ls3 = (ConstraintLayout.LayoutParams) spikeLeft3.getLayoutParams();
-                    ConstraintLayout.LayoutParams rs1 = (ConstraintLayout.LayoutParams) spikeRight1.getLayoutParams();
-                    ConstraintLayout.LayoutParams rs2 = (ConstraintLayout.LayoutParams) spikeRight2.getLayoutParams();
-                    ConstraintLayout.LayoutParams rs3 = (ConstraintLayout.LayoutParams) spikeRight3.getLayoutParams();
-                    shiftSpike(ls1, spikeLeft1, rs1, spikeRight1, screenHeight, screenWidth);
-                    shiftSpike(ls2, spikeLeft2, rs2, spikeRight2, screenHeight, screenWidth);
-                    shiftSpike(ls3, spikeLeft3, rs3, spikeRight3, screenHeight, screenWidth);
-                    collided = checkCollision(bubble,spikeLeft1, collided);
-                    collided = checkCollision(bubble,spikeLeft2, collided);
-                    collided = checkCollision(bubble,spikeLeft3, collided);
-                    pointAdd(bubble, spikeLeft1, collided);
-                    pointAdd(bubble, spikeLeft2, collided);
-                    pointAdd(bubble, spikeLeft3, collided);
+                if (sharedPreferences.getBoolean("paused", false) == false) {
+                    if (collided == false) {
 
+                        updateOrientationAngles();
+                        if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+                            System.arraycopy(sensorEvent.values, 0, mAccelerometerReading,
+                                    0, mAccelerometerReading.length);
+                        } else if (sensorEvent.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
+                            System.arraycopy(sensorEvent.values, 0, mMagnetometerReading,
+                                    0, mMagnetometerReading.length);
+                        }
 
-                    if (axisY > maxTilt) {
-                        lp.setMargins((screenWidth - bubble.getWidth()), 0, 0, (int) (screenHeight / 2 * .3));
-                        bubble.setLayoutParams(lp);
-                    } else if (axisY < -maxTilt) {
-                        lp.setMargins(0, 0, 0, (int) (screenHeight / 2 * .3));
-                        bubble.setLayoutParams(lp);
-                    } else {
-                        lp.setMargins((int) ((screenWidth / 2 - bubble.getWidth() / 2) + axisY * (screenWidth - bubble.getWidth()) / 2 / maxTilt), 0, 0, (int) (screenHeight / 2 * .3));
-                        bubble.setLayoutParams(lp);
-                        //axisX.setText("Z Axis: " + sensorEvent.values[2] * 180 /Math.PI);
+                        axisY = axisY * (1 - alpha) + alpha * mOrientationAngles[2];
+                        axisY *= 100;
+                        //double axisY = sensorEvent.values[1] * 180 / Math.PI;
+
+                        ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) bubble.getLayoutParams();
+                        ConstraintLayout.LayoutParams ls1 = (ConstraintLayout.LayoutParams) spikeLeft1.getLayoutParams();
+                        ConstraintLayout.LayoutParams ls2 = (ConstraintLayout.LayoutParams) spikeLeft2.getLayoutParams();
+                        ConstraintLayout.LayoutParams ls3 = (ConstraintLayout.LayoutParams) spikeLeft3.getLayoutParams();
+                        ConstraintLayout.LayoutParams rs1 = (ConstraintLayout.LayoutParams) spikeRight1.getLayoutParams();
+                        ConstraintLayout.LayoutParams rs2 = (ConstraintLayout.LayoutParams) spikeRight2.getLayoutParams();
+                        ConstraintLayout.LayoutParams rs3 = (ConstraintLayout.LayoutParams) spikeRight3.getLayoutParams();
+                        shiftSpike(ls1, spikeLeft1, rs1, spikeRight1, screenHeight, screenWidth);
+                        shiftSpike(ls2, spikeLeft2, rs2, spikeRight2, screenHeight, screenWidth);
+                        shiftSpike(ls3, spikeLeft3, rs3, spikeRight3, screenHeight, screenWidth);
+                        collided = checkCollision(bubble, spikeLeft1, collided);
+                        collided = checkCollision(bubble, spikeLeft2, collided);
+                        collided = checkCollision(bubble, spikeLeft3, collided);
+                        pointAdd(bubble, spikeLeft1);
+                        pointAdd(bubble, spikeLeft2);
+                        pointAdd(bubble, spikeLeft3);
+
+                        if (!collided) {
+                            if (axisY > maxTilt) {
+                                lp.setMargins((screenWidth - bubble.getWidth()), 0, 0, (int) (screenHeight / 2 * .3));
+                                bubble.setLayoutParams(lp);
+                            } else if (axisY < -maxTilt) {
+                                lp.setMargins(0, 0, 0, (int) (screenHeight / 2 * .3));
+                                bubble.setLayoutParams(lp);
+                            } else {
+                                lp.setMargins((int) ((screenWidth / 2 - bubble.getWidth() / 2) + axisY * (screenWidth - bubble.getWidth()) / 2 / maxTilt), 0, 0, (int) (screenHeight / 2 * .3));
+                                bubble.setLayoutParams(lp);
+                            }
+                        }
+                        axisY /= 100;
+                        scorer.setText(Integer.toString(score));
+                    } else if (gameEnded == false) {
+                        gameEnded = true;
+                        Intent intent = new Intent(getApplicationContext(), GameOverActivity.class);
+                        intent.putExtra("SCORE", score);
+                        finish();
+                        startActivity(intent);
                     }
-                    timer.setText(Integer.toString(score) + "M");
-                }
-               else if(gameEnded == false){
-                    gameEnded = true;
-                    Bundle instanceState = new Bundle();
-                    instanceState.putString("time", "32:09");
-                    onStop(instanceState);
 
                 }
-
             }
-
             @Override
             public void onAccuracyChanged(Sensor sensor, int i) {
+            }
 
+            public void updateOrientationAngles() {
+                // Update rotation matrix, which is needed to update orientation angles.
+                sensorManager.getRotationMatrix(mRotationMatrix, null,
+                        mAccelerometerReading, mMagnetometerReading);
+
+                // "mRotationMatrix" now has up-to-date information.
+
+                sensorManager.getOrientation(mRotationMatrix, mOrientationAngles);
+
+                // "mOrientationAngles" now has up-to-date information.
             }
         };
-        sensorManager.registerListener(gyroscopeEventListener, rotationSensor, SensorManager.SENSOR_DELAY_FASTEST);
+        sensorManager.registerListener(gyroscopeEventListener, rotationSensor, SensorManager.SENSOR_DELAY_GAME);
+        sensorManager.registerListener(gyroscopeEventListener, sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD), SensorManager.SENSOR_DELAY_GAME);
+
 
     }
 
     protected void onPause(Bundle savedInstanceState){
-        Intent intent = new Intent(getApplicationContext(), PausedActivity.class);
-        startActivity(intent);
+        SharedPreferences.Editor settingsEditor = sharedPreferences.edit();
+        settingsEditor.putBoolean("paused", true);
+        settingsEditor.apply();
     }
 
     protected void onStop(Bundle savedInstanceState){
-
-
-        Intent intent = new Intent(getApplicationContext(), GameOverActivity.class);
-        intent.putExtra("SCORE", score);
-        startActivity(intent);
-
-
     }
 
     protected void onResume(Bundle savedInstanceSteate){
-
+        SharedPreferences.Editor settingsEditor = sharedPreferences.edit();
+        settingsEditor.putBoolean("paused", false);
+        settingsEditor.apply();
     }
 
     private void shiftSpike(ConstraintLayout.LayoutParams positionLayoutLeft, ImageView spikeLeft, ConstraintLayout.LayoutParams positionLayoutRight, ImageView spikeRight, int screenHeight, int screenWidth){
@@ -215,14 +257,14 @@ public class GameplayActivity extends AppCompatActivity{
         ConstraintLayout.LayoutParams bubblePosition = (ConstraintLayout.LayoutParams) bubble.getLayoutParams();
         ConstraintLayout.LayoutParams spikeLeftPosition = (ConstraintLayout.LayoutParams) spikeLeft.getLayoutParams();
         if (bubblePosition.bottomMargin >= spikeLeftPosition.bottomMargin - spikeLeft.getHeight()*2 && bubblePosition.bottomMargin <= spikeLeftPosition.bottomMargin + bubble.getHeight()*2){
-            if (bubblePosition.leftMargin <= screenWidth-spikeLeftPosition.rightMargin || bubblePosition.leftMargin >= screenWidth-spikeLeftPosition.rightMargin + spikeGap)
+            if (bubblePosition.leftMargin <= screenWidth-spikeLeftPosition.rightMargin || bubblePosition.leftMargin >= screenWidth-spikeLeftPosition.rightMargin + spikeGap/2)
             return true;
         }
         return false;
 
 
     }
-    public void pointAdd (ImageView bubble, ImageView spikeLeft, boolean collided){
+    public void pointAdd (ImageView bubble, ImageView spikeLeft){
         ConstraintLayout.LayoutParams bubblePosition = (ConstraintLayout.LayoutParams) bubble.getLayoutParams();
         ConstraintLayout.LayoutParams spikeLeftPosition = (ConstraintLayout.LayoutParams) spikeLeft.getLayoutParams();
         if (bubblePosition.bottomMargin >= spikeLeftPosition.bottomMargin - spikeLeft.getHeight()*2 && bubblePosition.bottomMargin <= spikeLeftPosition.bottomMargin + bubble.getHeight()*2){
@@ -233,10 +275,7 @@ public class GameplayActivity extends AppCompatActivity{
             if(bubblePosition.bottomMargin >= spikeLeftPosition.bottomMargin + bubble.getHeight()*2){
                 pointCheck = false;
 
-                timer.setText(Integer.toString(score += 10));
-                //score
-
-                timer.setText(Integer.toString(score += 10) + "M");
+                scorer.setText(Integer.toString(score += 10));
 
 
             }
