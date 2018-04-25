@@ -1,7 +1,10 @@
 package com.example.game_project;
 
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -12,9 +15,28 @@ import android.widget.ImageView;
 public class MainActivity extends AppCompatActivity implements QuitDialog.QuitDialogListener{
 
     @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+    public void ThemeSongEnd(MediaPlayer mp)
+    {
+        mp.reset();
+        mp.release();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        SharedPreferences sharedPreferences;
+        sharedPreferences = getApplicationContext().getSharedPreferences("Settings", Context.MODE_PRIVATE);
+        SharedPreferences.Editor settingsEditor = sharedPreferences.edit();
+        settingsEditor.putBoolean("paused", false);
+        settingsEditor.apply();
+
+        final MediaPlayer mp = MediaPlayer.create(getApplicationContext(),R.raw.menu);
+        mp.setVolume(sharedPreferences.getInt("sfxVolume",100),sharedPreferences.getInt("sfxVolume",100));
+        mp.start();
 
         ImageView background = findViewById(R.id.background);
         background.setScaleType(ImageView.ScaleType.FIT_XY);
@@ -26,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements QuitDialog.QuitDi
                 Intent intent = new Intent(getApplicationContext(), GameplayActivity.class);
                 finish();
                 startActivity(intent);
+                ThemeSongEnd(mp);
             }
         });
 
@@ -55,7 +78,6 @@ public class MainActivity extends AppCompatActivity implements QuitDialog.QuitDi
                 confirmQuit(v);
             }
         });
-
 
 
     }

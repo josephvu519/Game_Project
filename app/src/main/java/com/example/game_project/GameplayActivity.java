@@ -69,9 +69,9 @@ public class GameplayActivity extends AppCompatActivity{
             scoreAdder = 20;
         else if (sharedPreferences.getInt("difficulty", 1) == 2)
             scoreAdder = 15;
-        else
+        else {
             scoreAdder = 10;
-
+        }
         spikePixelSpeed = sharedPreferences.getInt("difficulty", 1);
         spikePixelSpeed *= 10;
 
@@ -189,10 +189,9 @@ public class GameplayActivity extends AppCompatActivity{
                         axisY /= 100;
                         scorer.setText(Integer.toString(score));
                     } else if (gameEnded == false) {
-                        MediaPlayer mp = MediaPlayer.create(getApplicationContext(),R.raw.pop);
-                        mp.setVolume(sharedPreferences.getInt("sfxVolume",100),sharedPreferences.getInt("sfxVolume",100));
-                        mp.start();
-                       // mp.reset();
+                        MediaPlayer pops = MediaPlayer.create(getApplicationContext(),R.raw.pop);
+                        pops.setVolume(sharedPreferences.getInt("sfxVolume",100),sharedPreferences.getInt("sfxVolume",100));
+                        pops.start();
                         gameEnded = true;
                         Intent intent = new Intent(getApplicationContext(), GameOverActivity.class);
                         intent.putExtra("SCORE", score);
