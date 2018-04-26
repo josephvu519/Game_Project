@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.lang.reflect.Method;
+
 public class MainActivity extends AppCompatActivity implements QuitDialog.QuitDialogListener {
 
     public static final String PREFS_NAME = "MyPrefsFile";
@@ -24,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements QuitDialog.QuitDi
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         SharedPreferences sharedPreferences;
@@ -34,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements QuitDialog.QuitDi
         settingsEditor.apply();
 
         final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.menu);
-        mp.setVolume(sharedPreferences.getInt("sfxVolume", 100), sharedPreferences.getInt("sfxVolume", 100));
         mp.setLooping(true);
         mp.start();
 
@@ -83,15 +84,6 @@ public class MainActivity extends AppCompatActivity implements QuitDialog.QuitDi
     }
 
 
-
-    public void onPause() {
-        super.onPause();
-    }
-
-    public void onStop() {
-        super.onStop();
-    }
-
     public void confirmQuit(View view) {
         DialogFragment quitFragment = new QuitDialog();
         quitFragment.show(getFragmentManager(), "quitDialog");
@@ -103,4 +95,14 @@ public class MainActivity extends AppCompatActivity implements QuitDialog.QuitDi
         System.exit(0);
     }
 
-}
+    @Override
+    protected void onPause() {
+        MediaPlayer mp = MediaPlayer.create(this, R.raw.menu);
+        mp.stop();
+        mp.reset();
+        mp.release();
+        super.onPause();
+        }
+
+
+    }

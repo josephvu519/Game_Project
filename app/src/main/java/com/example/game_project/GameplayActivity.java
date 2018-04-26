@@ -309,5 +309,26 @@ public class GameplayActivity extends AppCompatActivity{
         }
     }
 
+    @Override
+    public void onPause() {
+        MediaPlayer mp = MediaPlayer.create(this, R.raw.normal);
+        mp.stop();
+        mp.release();
+        MediaPlayer mp1 = MediaPlayer.create(this, R.raw.crazy);
+        mp1.stop();
+        mp1.release();
+        MediaPlayer mp2 = MediaPlayer.create(this, R.raw.medium);
+        mp2.stop();
+        mp2.release();
+        super.onPause();
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+    }
+
+
 
 }
