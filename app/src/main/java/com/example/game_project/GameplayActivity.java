@@ -1,5 +1,6 @@
 package com.example.game_project;
 
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -27,6 +28,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import java.util.List;
 import java.util.Random;
+
+import static java.util.logging.Logger.global;
 
 public class GameplayActivity extends AppCompatActivity{
 
@@ -59,19 +62,24 @@ public class GameplayActivity extends AppCompatActivity{
         final ImageView spikeRight2 = findViewById(R.id.spikeRight2);
         final ImageView spikeRight3 = findViewById(R.id.spikeRight3);
 
+
         Context context = getApplicationContext();
         sharedPreferences = context.getSharedPreferences("Settings", Context.MODE_PRIVATE);
         SharedPreferences.Editor settingsEditor = sharedPreferences.edit();
         settingsEditor.putBoolean("paused", false);
         settingsEditor.apply();
 
-        if (sharedPreferences.getInt("difficulty", 1) == 3)
+        if (sharedPreferences.getInt("difficulty", 1) == 3){
             scoreAdder = 20;
-        else if (sharedPreferences.getInt("difficulty", 1) == 2)
+        }
+        else if (sharedPreferences.getInt("difficulty", 1) == 2) {
             scoreAdder = 15;
+        }
         else {
             scoreAdder = 10;
-        }
+            Music.SoundPlayer(getApplicationContext(),10);
+            Music.SoundPlayer(getApplicationContext(),1);
+            }
         spikePixelSpeed = sharedPreferences.getInt("difficulty", 1);
         spikePixelSpeed *= 10;
 
@@ -189,12 +197,14 @@ public class GameplayActivity extends AppCompatActivity{
                         axisY /= 100;
                         scorer.setText(Integer.toString(score));
                     } else if (gameEnded == false) {
-                        MediaPlayer pops = MediaPlayer.create(getApplicationContext(),R.raw.pop);
-                        pops.setVolume(sharedPreferences.getInt("sfxVolume",100),sharedPreferences.getInt("sfxVolume",100));
-                        pops.start();
                         gameEnded = true;
                         Intent intent = new Intent(getApplicationContext(), GameOverActivity.class);
                         intent.putExtra("SCORE", score);
+                        Music.SoundPlayer(getApplicationContext(),11);
+                        //MediaPlayer pops = MediaPlayer.create(getApplicationContext(),R.raw.pop);
+                        //pops.setVolume(sharedPreferences.getInt("sfxVolume",100),sharedPreferences.getInt("sfxVolume",100));
+                        //pops.start();
+
                         finish();
                         startActivity(intent);
                     }
@@ -277,6 +287,9 @@ public class GameplayActivity extends AppCompatActivity{
 
 
     }
+
+
+
     public void pointAdd (ImageView bubble, ImageView spikeLeft){
         ConstraintLayout.LayoutParams bubblePosition = (ConstraintLayout.LayoutParams) bubble.getLayoutParams();
         ConstraintLayout.LayoutParams spikeLeftPosition = (ConstraintLayout.LayoutParams) spikeLeft.getLayoutParams();
