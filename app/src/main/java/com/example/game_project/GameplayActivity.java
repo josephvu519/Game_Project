@@ -50,6 +50,9 @@ public class GameplayActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
+        final MediaPlayer player1 = MediaPlayer.create(getApplicationContext(), R.raw.normal);
+        final MediaPlayer player2 = MediaPlayer.create(getApplicationContext(), R.raw.medium);
+        final MediaPlayer player3 = MediaPlayer.create(getApplicationContext(), R.raw.crazy);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gameplay);
         scorer = (TextView)findViewById(R.id.score);
@@ -71,14 +74,19 @@ public class GameplayActivity extends AppCompatActivity{
 
         if (sharedPreferences.getInt("difficulty", 1) == 3){
             scoreAdder = 20;
+            player3.setLooping(true);
+            player3.start();
         }
-        else if (sharedPreferences.getInt("difficulty", 1) == 2) {
+        else if (sharedPreferences.getInt("difficulty", 1) == 2)
+        {
             scoreAdder = 15;
+            player2.setLooping(true); // Set looping
+            player2.start();
         }
         else {
             scoreAdder = 10;
-            Music.SoundPlayer(getApplicationContext(),10);
-            Music.SoundPlayer(getApplicationContext(),1);
+            player1.setLooping(true); // Set looping
+            player1.start();
             }
         spikePixelSpeed = sharedPreferences.getInt("difficulty", 1);
         spikePixelSpeed *= 10;
@@ -196,15 +204,20 @@ public class GameplayActivity extends AppCompatActivity{
                         }
                         axisY /= 100;
                         scorer.setText(Integer.toString(score));
-                    } else if (gameEnded == false) {
+                    }
+                    else if (gameEnded == false) {
                         gameEnded = true;
+                        player1.stop();
+                        player1.reset();
+                        player1.release();
+                        player2.stop();
+                        player2.reset();
+                        player2.release();
+                        player3.stop();
+                        player3.reset();
+                        player3.release();
                         Intent intent = new Intent(getApplicationContext(), GameOverActivity.class);
                         intent.putExtra("SCORE", score);
-                        Music.SoundPlayer(getApplicationContext(),11);
-                        //MediaPlayer pops = MediaPlayer.create(getApplicationContext(),R.raw.pop);
-                        //pops.setVolume(sharedPreferences.getInt("sfxVolume",100),sharedPreferences.getInt("sfxVolume",100));
-                        //pops.start();
-
                         finish();
                         startActivity(intent);
                     }
@@ -212,6 +225,7 @@ public class GameplayActivity extends AppCompatActivity{
                 }
             }
             @Override
+
             public void onAccuracyChanged(Sensor sensor, int i) {
             }
 

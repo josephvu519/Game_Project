@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity implements QuitDialog.QuitDi
 
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,8 +30,10 @@ public class MainActivity extends AppCompatActivity implements QuitDialog.QuitDi
         settingsEditor.putBoolean("paused", false);
         settingsEditor.apply();
 
-        final MediaPlayer menu = MediaPlayer.create(getApplicationContext(), R.raw.menu);
-        menu.start();
+        final MediaPlayer mp = MediaPlayer.create(getApplicationContext(),R.raw.menu);
+        mp.setVolume(sharedPreferences.getInt("sfxVolume",100),sharedPreferences.getInt("sfxVolume",100));
+        mp.setLooping(true);
+        mp.start();
 
         ImageView background = findViewById(R.id.background);
         background.setScaleType(ImageView.ScaleType.FIT_XY);
@@ -38,10 +42,9 @@ public class MainActivity extends AppCompatActivity implements QuitDialog.QuitDi
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                menu.stop();
-                menu.reset();
-                menu.release();
-                //end menu music here
+                mp.stop();
+                mp.reset();
+                mp.release();
                 Intent intent = new Intent(getApplicationContext(), GameplayActivity.class);
                 finish();
                 startActivity(intent);
@@ -74,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements QuitDialog.QuitDi
                 confirmQuit(v);
             }
         });
+
 
     }
     public void confirmQuit(View view){

@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -24,13 +25,17 @@ public class GameOverActivity extends AppCompatActivity {
         final int score = getIntent().getIntExtra("SCORE", 0);
         scoreText.setText(Integer.toString(score));
 
+        final MediaPlayer pop = MediaPlayer.create(getApplicationContext(), R.raw.pop);
+        pop.setLooping(true); // Set looping
+        pop.start();
+
+
         LeaderboardDB.getInstance(this).getWritableDatabase(new LeaderboardDB.OnDBReadyListener() {
             @Override
             public void onDBReady(SQLiteDatabase db) {
                 theDB = db;
                 ContentValues values = new ContentValues();
                 values.put("score", score);
-
                 long newRowID = theDB.insert("leaderboard", null, values);
                 db.close();
             }
@@ -40,6 +45,9 @@ public class GameOverActivity extends AppCompatActivity {
         playAgainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                pop.stop();
+                pop.reset();
+                pop.release();
                 Intent intent = new Intent(getApplicationContext(), GameplayActivity.class);
                 finish();
                 startActivity(intent);
@@ -50,6 +58,9 @@ public class GameOverActivity extends AppCompatActivity {
         mainMenuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                pop.stop();
+                pop.reset();
+                pop.release();
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 finish();
                 startActivity(intent);
