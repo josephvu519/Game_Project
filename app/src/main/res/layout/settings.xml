@@ -19,7 +19,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <SeekBar
+    <!--<SeekBar
         android:id="@+id/sfxBar"
         android:layout_width="225dp"
         android:layout_height="25dp"
@@ -92,13 +92,13 @@
         android:textSize="24dp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/bgmBar"
-        app:layout_constraintTop_toBottomOf="@+id/musicText" />
+        app:layout_constraintTop_toBottomOf="@+id/musicText" />-->
 
     <Button
         android:id="@+id/cancelButton"
         android:layout_width="115dp"
         android:layout_height="50dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="casual"
         android:text="@android:string/cancel"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -107,7 +107,8 @@
         app:layout_constraintHorizontal_bias="0.77"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bgmBar" />
+        app:layout_constraintTop_toBottomOf="@+id/difficultyDisplay" />
+        <!--app:layout_constraintTop_toBottomOf="@+id/bgmBar" -->
 
     <Button
         android:id="@+id/okButton"
@@ -115,7 +116,7 @@
         android:layout_height="50dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="casual"
         android:text="@android:string/ok"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -123,7 +124,8 @@
         app:layout_constraintEnd_toStartOf="@+id/cancelButton"
         app:layout_constraintHorizontal_bias="0.671"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bgmBar" />
+        app:layout_constraintTop_toBottomOf="@+id/difficultyDisplay" />
+        <!--app:layout_constraintTop_toBottomOf="@+id/bgmBar" -->
 
     <CheckBox
         android:id="@+id/tutorialBox"
@@ -177,7 +179,6 @@
         android:fontFamily="casual"
         android:text="@string/emptyName"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/soundText"
         app:layout_constraintEnd_toStartOf="@+id/difficultySetting"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/difficultyText" />

@@ -33,13 +33,13 @@ public class SettingsActivity extends AppCompatActivity {
         final SharedPreferences.Editor settingsEditor = sharedPreferences.edit();
 
         //Music/BGM
-        final SeekBar musicSeekBar = findViewById(R.id.bgmBar);
+        /*final SeekBar musicSeekBar = findViewById(R.id.bgmBar);
         int bgm = sharedPreferences.getInt("musicVolume", 100);
         musicSeekBar.setProgress(bgm);
 
         final CheckBox musicMute = findViewById(R.id.musicMuteCheckbox);
         boolean bgmMute = sharedPreferences.getBoolean("musicMute", false);
-        musicMute.setChecked(bgmMute);
+        musicMute.setChecked(bgmMute);*/
 
 
         final CheckBox tutorialEnabled = findViewById(R.id.tutorialBox);
@@ -48,9 +48,9 @@ public class SettingsActivity extends AppCompatActivity {
 
 
         //Sound FX
-        final SeekBar sfxSeekBar = findViewById(R.id.sfxBar);
+        /*final SeekBar sfxSeekBar = findViewById(R.id.sfxBar);
         int sfx = sharedPreferences.getInt("sfxVolume", 100);
-        sfxSeekBar.setProgress(sfx);
+        sfxSeekBar.setProgress(sfx);*/
 
         final RatingBar difficultySetting = findViewById(R.id.difficultySetting);
         int difficultyLevel = sharedPreferences.getInt("difficulty", 1);
@@ -68,20 +68,22 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
 
+/*
 
         final CheckBox soundMute = findViewById(R.id.soundMuteCheckbox);
         boolean sfxMute = sharedPreferences.getBoolean("sfxMute", false);
         soundMute.setChecked(sfxMute);
+*/
 
 
         Button okButton = findViewById(R.id.okButton);
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                settingsEditor.putInt("musicVolume", musicSeekBar.getProgress());
+               /* settingsEditor.putInt("musicVolume", musicSeekBar.getProgress());
                 settingsEditor.putBoolean("musicMute", musicMute.isChecked());
                 settingsEditor.putInt("sfxVolume", sfxSeekBar.getProgress());
-                settingsEditor.putBoolean("sfxMute", soundMute.isChecked());
+                settingsEditor.putBoolean("sfxMute", soundMute.isChecked());*/
                 settingsEditor.putBoolean("tutorial", tutorialEnabled.isChecked());
                 settingsEditor.putInt("difficulty", (int)difficultySetting.getRating());
                 settingsEditor.apply();

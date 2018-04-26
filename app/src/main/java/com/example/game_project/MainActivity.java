@@ -8,12 +8,15 @@ import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements QuitDialog.QuitDialogListener{
+public class MainActivity extends AppCompatActivity implements QuitDialog.QuitDialogListener {
 
+    public static final String PREFS_NAME = "MyPrefsFile";
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
@@ -21,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements QuitDialog.QuitDi
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         SharedPreferences sharedPreferences;
@@ -30,14 +33,13 @@ public class MainActivity extends AppCompatActivity implements QuitDialog.QuitDi
         settingsEditor.putBoolean("paused", false);
         settingsEditor.apply();
 
-        final MediaPlayer mp = MediaPlayer.create(getApplicationContext(),R.raw.menu);
-        mp.setVolume(sharedPreferences.getInt("sfxVolume",100),sharedPreferences.getInt("sfxVolume",100));
+        final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.menu);
+        mp.setVolume(sharedPreferences.getInt("sfxVolume", 100), sharedPreferences.getInt("sfxVolume", 100));
         mp.setLooping(true);
         mp.start();
 
         ImageView background = findViewById(R.id.background);
         background.setScaleType(ImageView.ScaleType.FIT_XY);
-
         Button startButton = findViewById(R.id.startButton);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,15 +80,27 @@ public class MainActivity extends AppCompatActivity implements QuitDialog.QuitDi
             }
         });
 
-
     }
-    public void confirmQuit(View view){
+
+
+
+    public void onPause() {
+        super.onPause();
+    }
+
+    public void onStop() {
+        super.onStop();
+    }
+
+    public void confirmQuit(View view) {
         DialogFragment quitFragment = new QuitDialog();
         quitFragment.show(getFragmentManager(), "quitDialog");
+
     }
 
     //Callback code is defined here
-    public void onPositiveClick(){
+    public void onPositiveClick() {
         System.exit(0);
     }
+
 }

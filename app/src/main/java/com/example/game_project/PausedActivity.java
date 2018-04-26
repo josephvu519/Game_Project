@@ -4,6 +4,7 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -23,7 +24,6 @@ public class PausedActivity extends AppCompatActivity implements QuitDialog.Quit
         final SharedPreferences.Editor settingsEditor = sharedPreferences.edit();
         settingsEditor.putBoolean("paused", true);
         settingsEditor.apply();
-
 
         Button resumeButton = findViewById(R.id.resumeButton);
         resumeButton.setOnClickListener(new View.OnClickListener() {

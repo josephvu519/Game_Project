@@ -6,14 +6,15 @@ import android.support.v7.app.AppCompatActivity;
 
 public class Music extends AppCompatActivity {
 
-    public static MediaPlayer pop;
 
-    public static void SoundPlayer(Context ctx, int id) {
+    public static void pause(MediaPlayer mp) {
 
-        MediaPlayer pop = MediaPlayer.create(ctx, R.raw.normal);
-        pop.setLooping(true); // Set looping
-        pop.start();
+        if (mp != null) {
+            if (mp.isPlaying()) {
+                mp.stop();
+            }
+        }
+
     }
-
 }
 

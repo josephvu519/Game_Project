@@ -48,6 +48,7 @@ public class GameplayActivity extends AppCompatActivity{
     int scoreAdder;
     TextView scorer;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         final MediaPlayer player1 = MediaPlayer.create(getApplicationContext(), R.raw.normal);
@@ -247,20 +248,7 @@ public class GameplayActivity extends AppCompatActivity{
 
     }
 
-    protected void onPause(Bundle savedInstanceState){
-        SharedPreferences.Editor settingsEditor = sharedPreferences.edit();
-        settingsEditor.putBoolean("paused", true);
-        settingsEditor.apply();
-    }
 
-    protected void onStop(Bundle savedInstanceState){
-    }
-
-    protected void onResume(Bundle savedInstanceSteate){
-        SharedPreferences.Editor settingsEditor = sharedPreferences.edit();
-        settingsEditor.putBoolean("paused", false);
-        settingsEditor.apply();
-    }
 
     private void shiftSpike(ConstraintLayout.LayoutParams positionLayoutLeft, ImageView spikeLeft, ConstraintLayout.LayoutParams positionLayoutRight, ImageView spikeRight, int screenHeight, int screenWidth){
         if (positionLayoutLeft.topMargin > spikeLeft.getHeight()){

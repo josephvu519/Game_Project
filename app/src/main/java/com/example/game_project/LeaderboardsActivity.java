@@ -42,9 +42,7 @@ public class LeaderboardsActivity extends AppCompatActivity implements ClearDial
             @Override
             public void onDBReady(SQLiteDatabase db) {
                 theDB = db;
-                //ContentValues values = new ContentValues();
 
-                //long newRowID = theDB.insert("leaderboard", null, values);
                 TextView[] scoreText = new TextView[5];
                 scoreText[0] = findViewById(R.id.score1Text);
                 scoreText[1] = findViewById(R.id.score2Text);

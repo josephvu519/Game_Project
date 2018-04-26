@@ -26,7 +26,7 @@ public class GameOverActivity extends AppCompatActivity {
         scoreText.setText(Integer.toString(score));
 
         final MediaPlayer pop = MediaPlayer.create(getApplicationContext(), R.raw.pop);
-        pop.setLooping(true); // Set looping
+        pop.setLooping(false); // Set looping
         pop.start();
 
 
